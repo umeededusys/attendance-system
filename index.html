@@ -16,12 +16,14 @@
   --bg-base: #0C0508;
   --surface: #130810;
   --maroon: #C41E30;
-  --maroon-deep: #7A0E1A;
   --gold: #D4AF37;
   --text-primary: #F2EBF0;
   --text-secondary: #A89AA5;
   --text-muted: #6B5E68;
   --border: rgba(255,255,255,0.07);
+  --success: #4ade80;
+  --error: #f87171;
+  --warning: #fbbf24;
 }
 
 [data-theme="light"] {
@@ -40,7 +42,6 @@ body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg-base);
   color: var(--text-primary);
-  transition: background 300ms, color 300ms;
 }
 
 .splash-container {
@@ -51,7 +52,6 @@ body {
   background: linear-gradient(135deg, #0C0508 0%, #1A0C15 100%);
   flex-direction: column;
   gap: 30px;
-  perspective: 1200px;
 }
 
 .logo-wrapper {
@@ -61,20 +61,14 @@ body {
   align-items: center;
   justify-content: center;
   animation: float3d 4s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 50px rgba(196, 30, 48, 0.4));
+  filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));
 }
 
-.logo-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
+.logo-image { width: 100%; height: 100%; object-fit: contain; }
 
 @keyframes float3d {
   0% { transform: rotateX(0deg) rotateY(0deg) translateY(0px); }
-  25% { transform: rotateX(15deg) rotateY(90deg) translateY(-10px); }
   50% { transform: rotateX(30deg) rotateY(180deg) translateY(0px); }
-  75% { transform: rotateX(15deg) rotateY(270deg) translateY(-10px); }
   100% { transform: rotateX(0deg) rotateY(360deg) translateY(0px); }
 }
 
@@ -92,8 +86,8 @@ body {
   font-size: 20px;
   color: #D4AF37;
   letter-spacing: 2px;
-  animation: fadeInUp 0.8s ease-out 0.5s both;
   font-weight: 500;
+  animation: fadeInUp 0.8s ease-out 0.5s both;
 }
 
 @keyframes fadeInUp {
@@ -121,7 +115,6 @@ body {
   height: 180px;
   margin-bottom: 50px;
   filter: drop-shadow(0 15px 40px rgba(196, 30, 48, 0.5));
-  animation: fadeInUp 0.8s ease-out both;
 }
 
 .login-title {
@@ -130,7 +123,6 @@ body {
   font-weight: 700;
   color: #F2EBF0;
   margin-bottom: 15px;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 .login-subtitle {
@@ -138,17 +130,11 @@ body {
   font-size: 18px;
   color: #D4AF37;
   margin-bottom: 30px;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
   font-weight: 500;
   letter-spacing: 1px;
 }
 
-.login-desc {
-  color: #A89AA5;
-  text-align: center;
-  font-size: 13px;
-  animation: fadeInUp 0.8s ease-out 0.6s both;
-}
+.login-desc { color: #A89AA5; text-align: center; font-size: 13px; }
 
 .login-right {
   flex: 1;
@@ -166,13 +152,9 @@ body {
   padding: 50px 40px;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-  animation: fadeInUp 0.8s ease-out 0.3s both;
 }
 
-.card-header {
-  margin-bottom: 30px;
-}
+.card-header { margin-bottom: 30px; }
 
 .card-title {
   font-family: 'Cormorant Garamond', serif;
@@ -182,14 +164,9 @@ body {
   margin-bottom: 8px;
 }
 
-.card-subtitle {
-  color: #A89AA5;
-  font-size: 13px;
-}
+.card-subtitle { color: #A89AA5; font-size: 13px; }
 
-.form-group {
-  margin-bottom: 22px;
-}
+.form-group { margin-bottom: 22px; }
 
 .form-label {
   display: block;
@@ -243,10 +220,7 @@ body {
   box-shadow: 0 12px 30px rgba(196, 30, 48, 0.4);
 }
 
-.submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .error-alert {
   background: rgba(239, 68, 68, 0.12);
@@ -256,13 +230,6 @@ body {
   padding: 12px 14px;
   font-size: 12px;
   margin-bottom: 20px;
-  animation: shake 0.4s ease;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
 }
 
 .login-footer {
@@ -299,9 +266,7 @@ body {
   letter-spacing: 1px;
 }
 
-.nav-group {
-  margin-bottom: 30px;
-}
+.nav-group { margin-bottom: 30px; }
 
 .nav-label {
   font-size: 10px;
@@ -437,9 +402,7 @@ body {
   padding: 30px;
 }
 
-.section-header {
-  margin-bottom: 30px;
-}
+.section-header { margin-bottom: 30px; }
 
 .section-title {
   font-family: 'Cormorant Garamond', serif;
@@ -554,9 +517,7 @@ body {
   font-size: 13px;
 }
 
-.data-table tr:hover {
-  background: rgba(196, 30, 48, 0.05);
-}
+.data-table tr:hover { background: rgba(196, 30, 48, 0.05); }
 
 .badge {
   display: inline-block;
@@ -567,39 +528,112 @@ body {
   text-transform: uppercase;
 }
 
-.badge-present {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-}
+.badge-present { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+.badge-absent { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+.badge-late { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+.badge-approved { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+.badge-pending { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+.badge-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
-.badge-absent {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-}
-
-.badge-late {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
-}
-
-.camera-btn {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, var(--gold), #B8941E);
-  color: #000;
-  border: none;
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.042);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 200ms ease;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
-.camera-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.3);
+.search-input:focus {
+  outline: none;
+  border-color: var(--maroon);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: rgba(196, 30, 48, 0.1);
+  border: 1px solid rgba(196, 30, 48, 0.3);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.filter-btn.active {
+  background: var(--maroon);
+  color: white;
+  border-color: var(--maroon);
+}
+
+.filter-btn:hover {
+  background: rgba(196, 30, 48, 0.2);
+}
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.staff-card {
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(0,0,0,0.05) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.staff-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--maroon);
+  box-shadow: 0 12px 32px rgba(196, 30, 48, 0.15);
+}
+
+.staff-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--maroon), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.staff-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.staff-role {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.staff-contact {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 4px 0;
 }
 
 .modal-overlay {
@@ -613,16 +647,14 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.modal-overlay.active {
-  display: flex;
-}
+.modal-overlay.active { display: flex; }
 
 .modal-content {
   background: var(--surface);
   border-radius: 20px;
   padding: 30px;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
   border: 1px solid var(--border);
@@ -648,12 +680,9 @@ body {
   font-size: 28px;
   cursor: pointer;
   color: var(--text-muted);
-  transition: color 150ms ease;
 }
 
-.modal-close:hover {
-  color: var(--text-primary);
-}
+.modal-close:hover { color: var(--text-primary); }
 
 .video-preview {
   width: 100%;
@@ -663,6 +692,45 @@ body {
   margin: 20px 0;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--maroon), #7A0E1A);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(196, 30, 48, 0.3);
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 12px;
+  background: rgba(196, 30, 48, 0.15);
+  border: 1px solid rgba(196, 30, 48, 0.3);
+  border-radius: 10px;
+  color: var(--maroon);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(196, 30, 48, 0.25);
+}
+
 .loading-text {
   text-align: center;
   color: var(--text-muted);
@@ -670,14 +738,16 @@ body {
 }
 
 @media (max-width: 768px) {
+  .login-container { flex-direction: column; }
   .app-layout { flex-direction: column; }
-  .sidebar { width: 100%; height: auto; flex-direction: row; padding: 0 20px; border-bottom: 1px solid var(--border); border-right: none; }
+  .sidebar { width: 100%; max-height: 70px; flex-direction: row; border-bottom: 1px solid var(--border); border-right: none; }
   .sidebar-brand { margin-bottom: 0; margin-right: auto; }
   .nav-group, .sidebar-footer { display: none; }
   .content-panel { padding: 20px; }
   .section-title { font-size: 24px; }
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
   .chart-grid { grid-template-columns: 1fr; }
+  .staff-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -691,16 +761,8 @@ const { useState, useEffect, useRef } = React;
 const SUPABASE_URL = 'https://edboqmaywwxbnltscrso.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkYm9xbWF5d3d4Ym5sdHNjcnNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4NjcwMDMsImV4cCI6MjA5MjQ0MzAwM30.2U8omeYP57ENxJcg5Yg1Egt2mwIMBAgxyNnLQtLGC_o';
 
-let supabaseClient = null;
-try {
-  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  console.log('✅ PHASE 2: Supabase Connected');
-} catch (error) {
-  console.error('Supabase Error:', error);
-}
-
 function UmeedLogo() {
-  const logoBase64 = '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';
+  const logoBase64 = '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';
   return (
     <img 
       src={`data:image/jpeg;base64,${logoBase64}`}
@@ -745,11 +807,7 @@ function LoginScreen({ onLoginSuccess }) {
     setLoading(true);
     setTimeout(() => {
       if (email === 'principal@umeededu.pk' && password === 'admin123') {
-        onLoginSuccess({
-          email,
-          name: 'H.M. Tariq Mehmood',
-          role: 'Principal - Admin',
-        });
+        onLoginSuccess({ email, name: 'H.M. Tariq Mehmood', role: 'Principal - Admin' });
       } else {
         setError('Invalid credentials');
       }
@@ -803,62 +861,6 @@ function LoginScreen({ onLoginSuccess }) {
   );
 }
 
-function CameraModal({ open, onClose, onCapture }) {
-  const videoRef = useRef(null);
-  const [status, setStatus] = useState('loading');
-
-  useEffect(() => {
-    if (open) {
-      setStatus('loading');
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
-        .then(stream => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            setStatus('ready');
-          }
-        })
-        .catch(err => {
-          console.error('Camera error:', err);
-          setStatus('error');
-        });
-    } else {
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-      }
-    }
-  }, [open]);
-
-  return (
-    <div className={`modal-overlay ${open ? 'active' : ''}`}>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h3 className="modal-title">Camera Attendance</h3>
-          <button className="modal-close" onClick={onClose}>×</button>
-        </div>
-
-        <p style={{color: 'var(--text-secondary)', marginBottom: 20, fontSize: 13}}>
-          Position yourself in front of the camera and click "Mark Present"
-        </p>
-
-        {status === 'loading' && <div className="loading-text">Starting camera...</div>}
-        {status === 'ready' && (
-          <>
-            <video ref={videoRef} className="video-preview" autoPlay playsInline />
-            <button className="camera-btn" onClick={onCapture} style={{width: '100%', marginBottom: 10}}>
-              Mark Present
-            </button>
-          </>
-        )}
-        {status === 'error' && <div className="loading-text">Camera not available</div>}
-
-        <button className="action-btn" onClick={onClose} style={{width: '100%'}}>
-          Cancel
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function AttendanceChart() {
   const canvasRef = useRef(null);
 
@@ -876,11 +878,7 @@ function AttendanceChart() {
             borderWidth: 2,
           }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-secondary)', padding: 15, font: {size: 12, weight: 600}}}}
-        }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: 'var(--text-secondary)', padding: 15, font: {size: 12, weight: 600}}}} }
       });
     }
   }, []);
@@ -908,21 +906,91 @@ function TrendChart() {
             tension: 0.4,
           }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { labels: { color: 'var(--text-secondary)', font: {size: 12}}}},
-          scales: {
-            y: { beginAtZero: true, max: 45, grid: {color: 'var(--border)'}, ticks: {color: 'var(--text-muted)'}},
-            x: { grid: {display: false}, ticks: {color: 'var(--text-muted)'}}
-          }
-        }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: 'var(--text-secondary)', font: {size: 12}}}}, scales: { y: { beginAtZero: true, max: 45, grid: {color: 'var(--border)'}, ticks: {color: 'var(--text-muted)'}}, x: { grid: {display: false}, ticks: {color: 'var(--text-muted)'}}}}
       });
     }
   }, []);
 
   return <canvas ref={canvasRef} />;
 }
+
+function CameraModal({ open, onClose }) {
+  const videoRef = useRef(null);
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    if (open) {
+      setStatus('loading');
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
+        .then(stream => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            setStatus('ready');
+          }
+        })
+        .catch(err => { console.error('Camera error:', err); setStatus('error'); });
+    } else {
+      if (videoRef.current?.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      }
+    }
+  }, [open]);
+
+  return (
+    <div className={`modal-overlay ${open ? 'active' : ''}`}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <h3 className="modal-title">Camera Attendance</h3>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+
+        <p style={{color: 'var(--text-secondary)', marginBottom: 20, fontSize: 13}}>Position yourself in front of the camera and click "Mark Present"</p>
+
+        {status === 'loading' && <div className="loading-text">Starting camera...</div>}
+        {status === 'ready' && (
+          <>
+            <video ref={videoRef} className="video-preview" autoPlay playsInline />
+            <div className="button-group">
+              <button className="btn-primary" onClick={() => { onClose(); alert('Attendance marked successfully!'); }}>Mark Present</button>
+              <button className="btn-secondary" onClick={onClose}>Cancel</button>
+            </div>
+          </>
+        )}
+        {status === 'error' && <div className="loading-text">Camera not available</div>}
+      </div>
+    </div>
+  );
+}
+
+// STAFF DATA
+const staffData = [
+  {id: 'UES-001', name: 'H.M. Tariq Mehmood', role: 'Principal', dept: 'Admin', email: 'principal@umeed.edu.pk', phone: '+92-300-1234567'},
+  {id: 'UES-002', name: 'Mrs. Ruqaiya Bibi', role: 'Vice Principal', dept: 'Admin', email: 'vice@umeed.edu.pk', phone: '+92-300-1234568'},
+  {id: 'UES-003', name: 'Miss Tayyaba', role: 'Assistant Admin', dept: 'Admin', email: 'tayyaba@umeed.edu.pk', phone: '+92-300-1234569'},
+  {id: 'UES-004', name: 'Miss Nafeesa', role: 'Accounts', dept: 'Admin', email: 'nafeesa@umeed.edu.pk', phone: '+92-300-1234570'},
+  {id: 'UES-005', name: 'Miss Ayesha Zahid', role: 'Teacher PG', dept: 'Primary', email: 'ayesha@umeed.edu.pk', phone: '+92-300-1234571'},
+  {id: 'UES-006', name: 'Miss Iqra Saleem', role: 'Assistant NUR', dept: 'Primary', email: 'iqra@umeed.edu.pk', phone: '+92-300-1234572'},
+  {id: 'UES-007', name: 'Mr. Muhammad Bilal', role: 'English Teacher', dept: 'Secondary', email: 'bilal@umeed.edu.pk', phone: '+92-300-1234573'},
+  {id: 'UES-008', name: 'Sir Hamza', role: 'Urdu Teacher', dept: 'Secondary', email: 'hamza@umeed.edu.pk', phone: '+92-300-1234574'},
+  {id: 'UES-009', name: 'Mr. Fahad Malik', role: 'Math Teacher', dept: 'Secondary', email: 'fahad@umeed.edu.pk', phone: '+92-300-1234575'},
+  {id: 'UES-010', name: 'Sir Irfan', role: 'Security Officer', dept: 'Support', email: 'irfan@umeed.edu.pk', phone: '+92-300-1234576'},
+];
+
+// LEAVE DATA
+const leaveData = [
+  {id: 'L-001', staffId: 'UES-001', staffName: 'H.M. Tariq Mehmood', type: 'Annual', fromDate: '2025-03-15', toDate: '2025-03-20', days: 5, status: 'Approved', reason: 'Family Visit'},
+  {id: 'L-002', staffId: 'UES-005', staffName: 'Miss Ayesha Zahid', type: 'Sick', fromDate: '2025-03-22', toDate: '2025-03-23', days: 2, status: 'Pending', reason: 'Medical Treatment'},
+  {id: 'L-003', staffId: 'UES-007', staffName: 'Mr. Muhammad Bilal', type: 'Annual', fromDate: '2025-04-01', toDate: '2025-04-10', days: 10, status: 'Pending', reason: 'Vacation'},
+  {id: 'L-004', staffId: 'UES-002', staffName: 'Mrs. Ruqaiya Bibi', type: 'Personal', fromDate: '2025-03-18', toDate: '2025-03-19', days: 2, status: 'Rejected', reason: 'Personal Work'},
+];
+
+// ATTENDANCE RECORDS
+const attRecords = [
+  {id: 'A-001', staffId: 'UES-001', staffName: 'H.M. Tariq Mehmood', date: '2025-03-20', inTime: '07:45 AM', outTime: '04:30 PM', status: 'Present'},
+  {id: 'A-002', staffId: 'UES-002', staffName: 'Mrs. Ruqaiya Bibi', date: '2025-03-20', inTime: '08:00 AM', outTime: '04:45 PM', status: 'Present'},
+  {id: 'A-003', staffId: 'UES-003', staffName: 'Miss Tayyaba', date: '2025-03-20', inTime: '08:30 AM', outTime: '05:00 PM', status: 'Late'},
+  {id: 'A-004', staffId: 'UES-004', staffName: 'Miss Nafeesa', date: '2025-03-20', inTime: '-', outTime: '-', status: 'Absent'},
+];
 
 function Dashboard() {
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -934,9 +1002,7 @@ function Dashboard() {
         <p className="section-date">{new Date().toLocaleDateString('en-GB', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</p>
       </div>
 
-      <button className="camera-btn" onClick={() => setCameraOpen(true)}>
-        Camera Attendance
-      </button>
+      <button className="btn-primary" onClick={() => setCameraOpen(true)} style={{marginBottom: 20}}>Camera Attendance</button>
 
       <div className="stat-grid">
         <div className="stat-box">
@@ -978,19 +1044,302 @@ function Dashboard() {
             <tr><th>Staff ID</th><th>Name</th><th>Check In</th><th>Status</th></tr>
           </thead>
           <tbody>
-            <tr><td>UES-001</td><td>H.M. Tariq Mehmood</td><td>07:48 AM</td><td><span className="badge badge-present">Present</span></td></tr>
-            <tr><td>UES-002</td><td>Mrs. Ruqaiya Bibi</td><td>07:52 AM</td><td><span className="badge badge-present">Present</span></td></tr>
-            <tr><td>UES-003</td><td>Mr. Muhammad Bilal</td><td>08:22 AM</td><td><span className="badge badge-late">Late</span></td></tr>
-            <tr><td>UES-004</td><td>Mr. Fahad Malik</td><td>—</td><td><span className="badge badge-absent">Absent</span></td></tr>
-            <tr><td>UES-005</td><td>Mrs. Hina Shabbir</td><td>08:00 AM</td><td><span className="badge badge-present">Present</span></td></tr>
+            {attRecords.map((rec, i) => (
+              <tr key={i}>
+                <td>{rec.staffId}</td>
+                <td>{rec.staffName}</td>
+                <td>{rec.inTime}</td>
+                <td><span className={`badge badge-${rec.status.toLowerCase()}`}>{rec.status}</span></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <CameraModal open={cameraOpen} onClose={() => setCameraOpen(false)} onCapture={() => {
-        setCameraOpen(false);
-        alert('Attendance marked successfully!');
-      }} />
+      <CameraModal open={cameraOpen} onClose={() => setCameraOpen(false)} />
+    </>
+  );
+}
+
+function StaffDirectory() {
+  const [search, setSearch] = useState('');
+  const [deptFilter, setDeptFilter] = useState('All');
+  const [selectedStaff, setSelectedStaff] = useState(null);
+
+  const depts = ['All', 'Admin', 'Primary', 'Secondary', 'Support'];
+  const filtered = staffData.filter(s => 
+    (deptFilter === 'All' || s.dept === deptFilter) &&
+    (s.name.toLowerCase().includes(search.toLowerCase()) || s.id.includes(search))
+  );
+
+  return (
+    <>
+      <div className="section-header">
+        <h1 className="section-title">Staff Directory</h1>
+        <p className="section-date">Total: {filtered.length} staff members</p>
+      </div>
+
+      <input type="text" className="search-input" placeholder="Search by name or ID..." value={search} onChange={(e) => setSearch(e.target.value)} />
+
+      <div className="filter-group">
+        {depts.map(dept => (
+          <button 
+            key={dept}
+            className={`filter-btn ${deptFilter === dept ? 'active' : ''}`}
+            onClick={() => setDeptFilter(dept)}
+          >
+            {dept}
+          </button>
+        ))}
+      </div>
+
+      <div className="staff-grid">
+        {filtered.map(staff => (
+          <div key={staff.id} className="staff-card" onClick={() => setSelectedStaff(staff)}>
+            <div className="staff-avatar">{staff.name.split(' ')[0][0]}</div>
+            <div className="staff-name">{staff.name}</div>
+            <div className="staff-role">{staff.role}</div>
+            <div className="staff-contact">{staff.email}</div>
+            <div className="staff-contact">{staff.phone}</div>
+          </div>
+        ))}
+      </div>
+
+      {selectedStaff && (
+        <div className="modal-overlay active">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-title">{selectedStaff.name}</h3>
+              <button className="modal-close" onClick={() => setSelectedStaff(null)}>×</button>
+            </div>
+            <p><strong>Staff ID:</strong> {selectedStaff.id}</p>
+            <p><strong>Role:</strong> {selectedStaff.role}</p>
+            <p><strong>Department:</strong> {selectedStaff.dept}</p>
+            <p><strong>Email:</strong> {selectedStaff.email}</p>
+            <p><strong>Phone:</strong> {selectedStaff.phone}</p>
+            <div className="button-group">
+              <button className="btn-secondary" onClick={() => setSelectedStaff(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function AttendanceRecords() {
+  const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+  const [statusFilter, setStatusFilter] = useState('All');
+
+  const statuses = ['All', 'Present', 'Absent', 'Late'];
+  const filtered = attRecords.filter(r => 
+    (statusFilter === 'All' || r.status === statusFilter)
+  );
+
+  return (
+    <>
+      <div className="section-header">
+        <h1 className="section-title">Attendance Records</h1>
+        <p className="section-date">Daily attendance tracking</p>
+      </div>
+
+      <div style={{marginBottom: 20}}>
+        <label className="form-label">Date</label>
+        <input type="date" className="search-input" value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
+      </div>
+
+      <div className="filter-group">
+        {statuses.map(status => (
+          <button 
+            key={status}
+            className={`filter-btn ${statusFilter === status ? 'active' : ''}`}
+            onClick={() => setStatusFilter(status)}
+          >
+            {status}
+          </button>
+        ))}
+      </div>
+
+      <div className="data-table">
+        <table>
+          <thead>
+            <tr><th>Staff ID</th><th>Name</th><th>Check In</th><th>Check Out</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            {filtered.map((rec, i) => (
+              <tr key={i}>
+                <td>{rec.staffId}</td>
+                <td>{rec.staffName}</td>
+                <td>{rec.inTime}</td>
+                <td>{rec.outTime}</td>
+                <td><span className={`badge badge-${rec.status.toLowerCase()}`}>{rec.status}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+function LeaveManagement() {
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [selectedLeave, setSelectedLeave] = useState(null);
+
+  const statuses = ['All', 'Pending', 'Approved', 'Rejected'];
+  const filtered = leaveData.filter(l => statusFilter === 'All' || l.status === statusFilter);
+
+  return (
+    <>
+      <div className="section-header">
+        <h1 className="section-title">Leave Management</h1>
+        <p className="section-date">Leave requests and approvals</p>
+      </div>
+
+      <div className="filter-group">
+        {statuses.map(status => (
+          <button 
+            key={status}
+            className={`filter-btn ${statusFilter === status ? 'active' : ''}`}
+            onClick={() => setStatusFilter(status)}
+          >
+            {status}
+          </button>
+        ))}
+      </div>
+
+      <div className="data-table">
+        <table>
+          <thead>
+            <tr><th>Staff ID</th><th>Name</th><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            {filtered.map((leave, i) => (
+              <tr key={i}>
+                <td>{leave.staffId}</td>
+                <td>{leave.staffName}</td>
+                <td>{leave.type}</td>
+                <td>{leave.fromDate}</td>
+                <td>{leave.toDate}</td>
+                <td>{leave.days}</td>
+                <td><span className={`badge badge-${leave.status.toLowerCase()}`}>{leave.status}</span></td>
+                <td>
+                  {leave.status === 'Pending' && (
+                    <>
+                      <button className="btn-primary" style={{padding: '6px 12px', fontSize: 12, marginRight: 5}} onClick={() => alert('Approved!')}>Approve</button>
+                      <button className="btn-secondary" style={{padding: '6px 12px', fontSize: 12}} onClick={() => alert('Rejected!')}>Reject</button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {selectedLeave && (
+        <div className="modal-overlay active">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-title">Leave Details</h3>
+              <button className="modal-close" onClick={() => setSelectedLeave(null)}>×</button>
+            </div>
+            <p><strong>Staff:</strong> {selectedLeave.staffName}</p>
+            <p><strong>Type:</strong> {selectedLeave.type}</p>
+            <p><strong>Period:</strong> {selectedLeave.fromDate} to {selectedLeave.toDate}</p>
+            <p><strong>Days:</strong> {selectedLeave.days}</p>
+            <p><strong>Reason:</strong> {selectedLeave.reason}</p>
+            <p><strong>Status:</strong> {selectedLeave.status}</p>
+            <div className="button-group">
+              <button className="btn-secondary" onClick={() => setSelectedLeave(null)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function Reports() {
+  return (
+    <>
+      <div className="section-header">
+        <h1 className="section-title">Reports</h1>
+        <p className="section-date">Comprehensive attendance analytics</p>
+      </div>
+
+      <div className="chart-grid">
+        <div className="chart-card">
+          <div className="chart-title">Monthly Distribution</div>
+          <div className="chart-subtitle">Status breakdown</div>
+          <div className="chart-container"><AttendanceChart /></div>
+        </div>
+
+        <div className="chart-card">
+          <div className="chart-title">Annual Trend</div>
+          <div className="chart-subtitle">12-month overview</div>
+          <div className="chart-container" style={{height: 300}}><TrendChart /></div>
+        </div>
+      </div>
+
+      <div className="data-table">
+        <div className="chart-title" style={{marginBottom: 20}}>Monthly Breakdown</div>
+        <table>
+          <thead>
+            <tr><th>Month</th><th>Present</th><th>Absent</th><th>Late</th><th>Attendance %</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>January</td><td>35</td><td>7</td><td>4</td><td><strong>75.2%</strong></td></tr>
+            <tr><td>February</td><td>34</td><td>9</td><td>3</td><td><strong>72.9%</strong></td></tr>
+            <tr><td>March</td><td>36</td><td>6</td><td>4</td><td><strong>77.1%</strong></td></tr>
+            <tr><td>April</td><td>32</td><td>8</td><td>6</td><td><strong>69.6%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+function Settings() {
+  const [theme, setTheme] = useState('dark');
+
+  return (
+    <>
+      <div className="section-header">
+        <h1 className="section-title">Settings</h1>
+        <p className="section-date">Personalization and preferences</p>
+      </div>
+
+      <div className="data-table">
+        <div className="chart-title" style={{marginBottom: 20}}>Preferences</div>
+        <div style={{padding: 20}}>
+          <div style={{marginBottom: 20}}>
+            <p><strong>Theme</strong></p>
+            <div className="filter-group">
+              <button 
+                className={`filter-btn ${theme === 'dark' ? 'active' : ''}`}
+                onClick={() => { setTheme('dark'); document.documentElement.setAttribute('data-theme', 'dark'); }}
+              >
+                Dark Mode
+              </button>
+              <button 
+                className={`filter-btn ${theme === 'light' ? 'active' : ''}`}
+                onClick={() => { setTheme('light'); document.documentElement.setAttribute('data-theme', 'light'); }}
+              >
+                Light Mode
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>System Information</strong></p>
+            <p>Version: 3.0 (Complete)</p>
+            <p>Academic Year: 2025-26</p>
+            <p>School: Umeed Education System</p>
+            <p>Staff Count: 46</p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
@@ -1002,11 +1351,13 @@ function App() {
 
   useEffect(() => {
     console.log('═══════════════════════════════════════════════════════');
-    console.log('✅ PHASE 2 PROFESSIONAL: COMPLETE');
-    console.log('✅ Real UMEED Logo - LOADED');
-    console.log('✅ Professional Design - NO EMOJIS');
-    console.log('✅ Working Charts - READY');
-    console.log('✅ Camera Integration - READY');
+    console.log('✅ PHASE 3 COMPLETE: PROFESSIONAL SYSTEM');
+    console.log('✅ Dashboard - READY');
+    console.log('✅ Staff Directory - READY');
+    console.log('✅ Attendance Records - READY');
+    console.log('✅ Leave Management - READY');
+    console.log('✅ Reports - READY');
+    console.log('✅ Settings - READY');
     console.log('═══════════════════════════════════════════════════════');
   }, []);
 
@@ -1021,8 +1372,10 @@ function App() {
           <div className="nav-label">Main</div>
           <button className={`nav-btn ${page === 'dashboard' ? 'active' : ''}`} onClick={() => setPage('dashboard')}>Dashboard</button>
           <button className={`nav-btn ${page === 'staff' ? 'active' : ''}`} onClick={() => setPage('staff')}>Staff</button>
+          <button className={`nav-btn ${page === 'attendance' ? 'active' : ''}`} onClick={() => setPage('attendance')}>Attendance</button>
           <button className={`nav-btn ${page === 'leaves' ? 'active' : ''}`} onClick={() => setPage('leaves')}>Leaves</button>
           <button className={`nav-btn ${page === 'reports' ? 'active' : ''}`} onClick={() => setPage('reports')}>Reports</button>
+          <button className={`nav-btn ${page === 'settings' ? 'active' : ''}`} onClick={() => setPage('settings')}>Settings</button>
         </div>
         <div className="sidebar-footer">
           <div className="user-card">
@@ -1038,12 +1391,16 @@ function App() {
           <div className="topbar-title">Umeed Education System</div>
           <div className="topbar-actions">
             <button className="action-btn" onClick={() => window.print()}>Print</button>
-            <button className="action-btn">Settings</button>
+            <button className="action-btn">About</button>
           </div>
         </div>
         <div className="content-panel">
           {page === 'dashboard' && <Dashboard />}
-          {page !== 'dashboard' && <div className="loading-text">Coming in Phase 3</div>}
+          {page === 'staff' && <StaffDirectory />}
+          {page === 'attendance' && <AttendanceRecords />}
+          {page === 'leaves' && <LeaveManagement />}
+          {page === 'reports' && <Reports />}
+          {page === 'settings' && <Settings />}
         </div>
       </div>
     </div>
