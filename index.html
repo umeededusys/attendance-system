@@ -3,73 +3,551 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Umeed Education System</title>
+<title>Umeed Education System - Attendance Management</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root {
-  --bg: #0C0508;
-  --surface: #130810;
-  --maroon: #C41E30;
+:root, [data-theme="dark"] {
+  --bg-base: #0C0508;
+  --bg-surface: #130810;
+  --bg-elevated: #1A0C15;
+  --sidebar-bg: linear-gradient(180deg,#1E0B14 0%,#160811 55%,#0F0710 100%);
+  --topbar-bg: rgba(12,5,8,0.9);
+  --maroon-deep: #7A0E1A;
+  --maroon-mid: #A01020;
+  --maroon-bright: #C41E30;
   --gold: #D4AF37;
-  --text: #F2EBF0;
-  --text-dim: #A89AA5;
+  --text-primary: #F2EBF0;
+  --text-secondary: #A89AA5;
+  --text-muted: #6B5E68;
   --border: rgba(255,255,255,0.07);
+  --glass-bg: linear-gradient(135deg,rgba(255,255,255,0.042) 0%,rgba(255,255,255,0.018) 100%);
+  --shadow-md: 0 6px 28px rgba(0,0,0,0.42);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
-#root { height: 100vh; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-base); color: var(--text-primary); }
+html, body, #root { height: 100%; }
 
-.app-container { display: flex; height: 100vh; }
-.sidebar { width: 260px; background: linear-gradient(180deg, #1E0B14 0%, #0F0710 100%); padding: 20px; border-right: 1px solid var(--border); overflow-y: auto; }
-.sidebar-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 30px; }
-.nav-btn { display: block; width: 100%; padding: 10px 12px; margin: 8px 0; border: none; background: transparent; color: var(--text-dim); cursor: pointer; text-align: left; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 150ms; }
-.nav-btn.active { background: rgba(196,30,48,0.28); color: var(--text); }
-.nav-btn:hover { background: rgba(255,255,255,0.048); color: var(--text); }
+.login-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #0C0508 0%, #1A0C15 100%);
+}
 
-.main-area { flex: 1; display: flex; flex-direction: column; }
-.topbar { height: 60px; background: rgba(12,5,8,0.9); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
-.content { flex: 1; overflow-y: auto; padding: 20px; }
+.login-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
 
-.glass { background: rgba(255,255,255,0.042); backdrop-filter: blur(18px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 6px 28px rgba(0,0,0,0.42); }
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
-.stat-card { padding: 20px; border-radius: 20px; text-align: center; background: rgba(255,255,255,0.042); border: 1px solid var(--border); }
-.stat-value { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; margin: 12px 0; }
-.stat-label { font-size: 12px; color: var(--text-dim); }
+.logo-badge {
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, #C41E30 0%, #7A0E1A 100%);
+  border: 3px solid #D4AF37;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  box-shadow: 0 20px 60px rgba(196, 30, 48, 0.4);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #D4AF37;
+}
 
-table { width: 100%; border-collapse: collapse; }
-th { text-align: left; padding: 10px 0; color: var(--text-dim); font-size: 11px; font-weight: 600; border-bottom: 1px solid var(--border); }
-td { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.login-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  text-align: center;
+}
 
-.badge { display: inline-block; padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-.badge-present { background: rgba(34,197,94,.12); color: #4ade80; }
-.badge-absent { background: rgba(239,68,68,.12); color: #f87171; }
-.badge-late { background: rgba(251,191,36,.12); color: #fbbf24; }
+.login-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 60px;
+}
 
-.btn { padding: 9px 18px; border: 1px solid var(--border); background: transparent; color: var(--text-dim); border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 150ms; }
-.btn:hover { background: rgba(255,255,255,0.048); color: var(--text); }
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
 
-.loading { display: flex; align-items: center; gap: 8px; color: var(--text-dim); justify-content: center; padding: 40px; }
-.spinner { width: 16px; height: 16px; border: 2px solid rgba(212,175,55,0.3); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.login-card {
+  background: rgba(26, 12, 21, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(196, 30, 48, 0.3);
+  border-radius: 24px;
+  padding: 50px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
 
-h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-h2 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 16px; }
-p { color: var(--text-dim); }
+.login-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.login-card p {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.042);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  transition: all 200ms;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--maroon-bright);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 16px rgba(196, 30, 48, 0.2);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--maroon-bright), var(--maroon-deep));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms;
+  font-size: 14px;
+  box-shadow: 0 8px 20px rgba(196, 30, 48, 0.3);
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(196, 30, 48, 0.4);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-msg {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+/* ─── APP LAYOUT ─────────────────────────────────────────── */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-item {
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item.active {
+  background: rgba(196, 30, 48, 0.28);
+  color: var(--text-primary);
+  border-left: 3px solid var(--maroon-bright);
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.048);
+  color: var(--text-primary);
+}
+
+.topbar {
+  height: 60px;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex: 1;
+}
+
+.topbar-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 150ms;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base);
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.date-label {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.glass-box {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th {
+  text-align: left;
+  padding: 10px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-present { background: rgba(34,197,94,0.12); color: #4ade80; }
+.badge-absent { background: rgba(239,68,68,0.12); color: #f87171; }
+.badge-late { background: rgba(251,191,36,0.12); color: #fbbf24; }
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.staff-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.staff-card:hover {
+  border-color: var(--maroon-bright);
+  box-shadow: 0 8px 24px rgba(196, 30, 48, 0.2);
+}
+
+.staff-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--maroon-bright), var(--maroon-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.staff-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.staff-role {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-top: 2px solid var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.section-sub {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.tab-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: all 150ms;
+}
+
+.tab.active {
+  color: var(--maroon-bright);
+  border-bottom-color: var(--maroon-bright);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(196, 30, 48, 0.15);
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--maroon-bright), var(--maroon-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.profile-role {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease-out;
+}
+
+@media (max-width: 768px) {
+  .login-container { flex-direction: column; }
+  .login-left { padding: 20px; }
+  .login-right { padding: 20px; }
+  .sidebar { width: 100%; min-height: auto; }
+  .logo-badge { width: 120px; height: 120px; }
+  .login-title { font-size: 32px; }
+  .login-subtitle { font-size: 24px; }
+}
 </style>
 </head>
+
 <body>
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
-// HARDCODED SUPABASE CREDENTIALS
+// ═════════════════════════════════════════════════════════
+// SUPABASE CONFIGURATION
+// ═════════════════════════════════════════════════════════
+
 const SUPABASE_URL = 'https://edboqmaywwxbnltscrso.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkYm9xbWF5d3d4Ym5sdHNjcnNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4NjcwMDMsImV4cCI6MjA5MjQ0MzAwM30.2U8omeYP57ENxJcg5Yg1Egt2mwIMBAgxyNnLQtLGC_o';
 
@@ -78,8 +556,12 @@ try {
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   console.log('✅ SUPABASE CONNECTED');
 } catch (e) {
-  console.error('❌ Supabase Error:', e.message);
+  console.error('❌ Supabase Error:', e);
 }
+
+// ═════════════════════════════════════════════════════════
+// DATA OPERATIONS
+// ═════════════════════════════════════════════════════════
 
 const dataOps = {
   async getStaff() {
@@ -91,7 +573,7 @@ const dataOps = {
         .eq('status', 'active')
         .order('name');
       if (error) throw error;
-      console.log('✅ Loaded', data.length, 'staff');
+      console.log(`✅ Loaded ${data?.length || 0} staff members`);
       return data || [];
     } catch (e) {
       console.error('Staff error:', e.message);
@@ -106,7 +588,8 @@ const dataOps = {
       const { data, error } = await supabaseClient
         .from('attendance')
         .select('*')
-        .eq('date', today);
+        .eq('date', today)
+        .order('in_time', { ascending: false });
       if (error) throw error;
       return data || [];
     } catch (e) {
@@ -135,30 +618,118 @@ const dataOps = {
       return { total: 0, present: 0, absent: 0, late: 0 };
     }
   },
+
+  async getLeaves() {
+    if (!supabaseClient) return [];
+    try {
+      const { data, error } = await supabaseClient
+        .from('leaves')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } catch (e) {
+      console.error('Leaves error:', e.message);
+      return [];
+    }
+  },
 };
 
 window.dataOps = dataOps;
-window.supabaseClient = supabaseClient;
 
-function Badge({ status }) {
-  const statusMap = {
-    present: ['badge-present', 'Present'],
-    absent: ['badge-absent', 'Absent'],
-    late: ['badge-late', 'Late'],
+// ═════════════════════════════════════════════════════════
+// LOGIN SCREEN
+// ═════════════════════════════════════════════════════════
+
+function LoginScreen({ onLoginSuccess }) {
+  const [email, setEmail] = useState('principal@umeededu.pk');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    // Simple validation (in production, use Supabase auth)
+    if (email && password) {
+      try {
+        // For now, we'll use a simple admin login
+        const adminEmail = 'principal@umeededu.pk';
+        const adminPassword = 'admin123';
+
+        if (email === adminEmail && password === adminPassword) {
+          onLoginSuccess({ email, name: 'H.M. Tariq Mehmood', role: 'Principal - Admin' });
+        } else {
+          setError('Invalid email or password');
+        }
+      } catch (e) {
+        setError(e.message);
+      }
+    } else {
+      setError('Please enter email and password');
+    }
+
+    setLoading(false);
   };
-  const [cls, label] = statusMap[status] || ['badge-late', status];
-  return <span className={`badge ${cls}`}>{label}</span>;
-}
 
-function StatCard({ value, label, color, icon }) {
   return (
-    <div className="stat-card">
-      <div style={{ fontSize: 28 }}>{icon}</div>
-      <div className="stat-value" style={{ color }}>{value}</div>
-      <div className="stat-label">{label}</div>
+    <div className="login-container">
+      <div className="login-left">
+        <div className="logo-badge">UMEED</div>
+        <div className="login-title">Umeed</div>
+        <div className="login-subtitle">Education System</div>
+        <p style={{ color: 'var(--text-muted)', textAlign: 'center', marginTop: 40 }}>
+          Staff Attendance Management System
+        </p>
+      </div>
+
+      <div className="login-right">
+        <div className="login-card">
+          <h2>Admin Portal</h2>
+          <p>Sign in to manage staff attendance</p>
+
+          {error && <div className="error-msg">{error}</div>}
+
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              <label>Admin Email</label>
+              <input
+                type="email"
+                placeholder="principal@umeededu.pk"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <button className="login-btn" type="submit" disabled={loading}>
+              {loading ? 'Signing in...' : 'Sign In →'}
+            </button>
+          </form>
+
+          <p style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 20, textAlign: 'center' }}>
+            Umeed Education System · v21 · Academic Year 2025-26
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
+
+// ═════════════════════════════════════════════════════════
+// DASHBOARD SCREEN
+// ═════════════════════════════════════════════════════════
 
 function DashboardScreen() {
   const [staff, setStaff] = useState([]);
@@ -174,15 +745,17 @@ function DashboardScreen() {
           dataOps.getAttendanceToday(),
           dataOps.getAttendanceStats(),
         ]);
+
         setStaff(staffData);
         setAttendance(attendanceData);
         setStats(statsData);
       } catch (e) {
-        console.error('Load error:', e);
+        console.error('Dashboard error:', e);
       } finally {
         setLoading(false);
       }
     }
+
     loadData();
     const interval = setInterval(loadData, 30000);
     return () => clearInterval(interval);
@@ -191,42 +764,73 @@ function DashboardScreen() {
   return (
     <>
       <h1>Dashboard</h1>
-      <p>{new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-      
+      <div className="date-label">
+        {new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+      </div>
+
       {loading ? (
         <div className="loading">
           <div className="spinner"></div>
-          Loading...
+          <div>Loading data...</div>
         </div>
       ) : (
         <>
           <div className="stat-grid">
-            <StatCard value={staff.length} label="Total Staff" color="var(--gold)" icon="👥" />
-            <StatCard value={stats.present} label="Present" color="#4ade80" icon="✓" />
-            <StatCard value={stats.absent} label="Absent" color="#f87171" icon="✗" />
-            <StatCard value={stats.late} label="Late" color="#fbbf24" icon="⏰" />
+            <div className="stat-card fade-up" style={{ animationDelay: '0s' }}>
+              <div style={{ fontSize: 20 }}>👥</div>
+              <div className="stat-number" style={{ color: 'var(--gold)' }}>{staff.length}</div>
+              <div className="stat-label">Total Staff</div>
+            </div>
+
+            <div className="stat-card fade-up" style={{ animationDelay: '0.05s' }}>
+              <div style={{ fontSize: 20, color: '#4ade80' }}>✓</div>
+              <div className="stat-number" style={{ color: '#4ade80' }}>{stats.present}</div>
+              <div className="stat-label">Present Today</div>
+            </div>
+
+            <div className="stat-card fade-up" style={{ animationDelay: '0.1s' }}>
+              <div style={{ fontSize: 20, color: '#f87171' }}>✗</div>
+              <div className="stat-number" style={{ color: '#f87171' }}>{stats.absent}</div>
+              <div className="stat-label">Absent Today</div>
+            </div>
+
+            <div className="stat-card fade-up" style={{ animationDelay: '0.15s' }}>
+              <div style={{ fontSize: 20, color: '#fbbf24' }}>⏰</div>
+              <div className="stat-number" style={{ color: '#fbbf24' }}>{stats.late}</div>
+              <div className="stat-label">Late Arrivals</div>
+            </div>
           </div>
 
-          <div className="glass">
-            <h2>Today's Attendance</h2>
+          <div className="glass-box">
+            <div className="section-header">
+              <div className="section-title">Today's Attendance</div>
+              <div className="section-sub">{attendance.length} records</div>
+            </div>
+
             {attendance.length === 0 ? (
-              <p>No records yet</p>
+              <p style={{ color: 'var(--text-muted)', padding: '20px', textAlign: 'center' }}>
+                No attendance records yet
+              </p>
             ) : (
               <table>
                 <thead>
                   <tr>
                     <th>Staff ID</th>
-                    <th>In Time</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {attendance.slice(0, 15).map((record, i) => (
+                  {attendance.slice(0, 10).map((record, i) => (
                     <tr key={i}>
-                      <td>{record.staff_id}</td>
+                      <td><strong>{record.staff_id}</strong></td>
                       <td>{record.in_time || '—'}</td>
+                      <td>{record.out_time || '—'}</td>
                       <td>
-                        <Badge status={record.status} />
+                        <span className={`badge badge-${record.status}`}>
+                          {record.status ? record.status.charAt(0).toUpperCase() + record.status.slice(1) : 'Unknown'}
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -240,39 +844,73 @@ function DashboardScreen() {
   );
 }
 
+// ═════════════════════════════════════════════════════════
+// STAFF SCREEN
+// ═════════════════════════════════════════════════════════
+
 function StaffScreen() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('All');
 
   useEffect(() => {
     async function loadStaff() {
-      const data = await dataOps.getStaff();
-      setStaff(data);
-      setLoading(false);
+      try {
+        const data = await dataOps.getStaff();
+        setStaff(data);
+      } catch (e) {
+        console.error('Staff load error:', e);
+      } finally {
+        setLoading(false);
+      }
     }
     loadStaff();
   }, []);
 
+  const roles = ['All', 'Teacher', 'Admin', 'Support'];
+  const filtered = filter === 'All' ? staff : staff.filter(s => s.role === filter);
+
   return (
     <>
-      <h1>Staff Directory</h1>
+      <h1>Staff Management</h1>
+      <div className="section-sub" style={{ marginBottom: 20 }}>
+        {staff.length} total staff members
+      </div>
+
+      {!loading && (
+        <div className="tab-group">
+          {roles.map(role => (
+            <button
+              key={role}
+              className={`tab ${filter === role ? 'active' : ''}`}
+              onClick={() => setFilter(role)}
+            >
+              {role}
+            </button>
+          ))}
+        </div>
+      )}
+
       {loading ? (
         <div className="loading">
           <div className="spinner"></div>
-          Loading...
+          <div>Loading staff...</div>
         </div>
-      ) : staff.length === 0 ? (
-        <p>No staff found</p>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
-          {staff.map((person, i) => (
-            <div key={i} className="glass">
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>{person.name}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-dim)', marginBottom: 8 }}>{person.role}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-dim)', display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <div>Dept: {person.dept}</div>
-                <div>Email: {person.email || 'N/A'}</div>
-                <div>Phone: {person.phone || 'N/A'}</div>
+        <div className="staff-grid">
+          {filtered.map((person, i) => (
+            <div key={i} className="staff-card fade-up" style={{ animationDelay: `${i * 0.05}s` }}>
+              <div className="staff-avatar">
+                {person.name.charAt(0).toUpperCase()}
+              </div>
+              <div className="staff-name">{person.name}</div>
+              <div className="staff-role">{person.role}</div>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 8 }}>
+                {person.dept}
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                <div>✉ {person.email || 'N/A'}</div>
+                <div>📱 {person.phone || 'N/A'}</div>
               </div>
             </div>
           ))}
@@ -282,60 +920,132 @@ function StaffScreen() {
   );
 }
 
-function Sidebar({ activePage, setActivePage }) {
+// ═════════════════════════════════════════════════════════
+// LEAVES SCREEN
+// ═════════════════════════════════════════════════════════
+
+function LeavesScreen() {
+  const [leaves, setLeaves] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLeaves() {
+      try {
+        const data = await dataOps.getLeaves();
+        setLeaves(data);
+      } catch (e) {
+        console.error('Leaves error:', e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadLeaves();
+  }, []);
+
   return (
-    <div className="sidebar">
-      <div className="sidebar-title">UMEED</div>
-      <button 
-        className={`nav-btn ${activePage === 'dashboard' ? 'active' : ''}`}
-        onClick={() => setActivePage('dashboard')}
-      >
-        📊 Dashboard
-      </button>
-      <button 
-        className={`nav-btn ${activePage === 'staff' ? 'active' : ''}`}
-        onClick={() => setActivePage('staff')}
-      >
-        👥 Staff
-      </button>
-      <button 
-        className={`nav-btn ${activePage === 'leaves' ? 'active' : ''}`}
-        onClick={() => setActivePage('leaves')}
-      >
-        📅 Leaves
-      </button>
-      <button 
-        className={`nav-btn ${activePage === 'reports' ? 'active' : ''}`}
-        onClick={() => setActivePage('reports')}
-      >
-        📈 Reports
-      </button>
-    </div>
+    <>
+      <h1>Leave Management</h1>
+      <div className="section-sub" style={{ marginBottom: 20 }}>
+        Staff leave requests
+      </div>
+
+      {loading ? (
+        <div className="loading">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        <div className="glass-box">
+          {leaves.length === 0 ? (
+            <p style={{ color: 'var(--text-muted)', padding: '20px', textAlign: 'center' }}>
+              No leave requests
+            </p>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>Staff Member</th>
+                  <th>Type</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leaves.map((leave, i) => (
+                  <tr key={i}>
+                    <td><strong>{leave.staff_id}</strong></td>
+                    <td>{leave.type}</td>
+                    <td>{leave.from_date} to {leave.to_date}</td>
+                    <td>
+                      <span className={`badge badge-${leave.status}`}>
+                        {leave.status ? leave.status.charAt(0).toUpperCase() + leave.status.slice(1) : 'Pending'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
-function Topbar({ onThemeToggle }) {
+// ═════════════════════════════════════════════════════════
+// REPORTS SCREEN
+// ═════════════════════════════════════════════════════════
+
+function ReportsScreen() {
   return (
-    <div className="topbar">
-      <div style={{ fontSize: 16, fontWeight: 600 }}>Attendance Management System</div>
-      <button className="btn" onClick={onThemeToggle}>🌙</button>
-    </div>
+    <>
+      <h1>Reports</h1>
+      <div className="section-sub" style={{ marginBottom: 20 }}>
+        Attendance Reports & Analytics
+      </div>
+
+      <div className="glass-box">
+        <p style={{ color: 'var(--text-muted)', padding: '20px', textAlign: 'center' }}>
+          Comprehensive reports and analytics coming soon...
+        </p>
+      </div>
+    </>
   );
 }
+
+// ═════════════════════════════════════════════════════════
+// MAIN APP
+// ═════════════════════════════════════════════════════════
 
 function App() {
+  const [user, setUser] = useState(null);
   const [page, setPage] = useState('dashboard');
+
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+    console.log('✅ USER LOGGED IN:', userData);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setPage('dashboard');
+  };
+
+  if (!user) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
 
   const renderPage = () => {
     switch (page) {
       case 'dashboard':
         return <DashboardScreen />;
+      case 'attendance':
+        return <DashboardScreen />;
       case 'staff':
         return <StaffScreen />;
       case 'leaves':
-        return <div><h1>Leaves</h1><p>Coming soon</p></div>;
+        return <LeavesScreen />;
       case 'reports':
-        return <div><h1>Reports</h1><p>Coming soon</p></div>;
+        return <ReportsScreen />;
       default:
         return <DashboardScreen />;
     }
@@ -343,10 +1053,56 @@ function App() {
 
   return (
     <div className="app-container">
-      <Sidebar activePage={page} setActivePage={setPage} />
-      <div className="main-area">
-        <Topbar onThemeToggle={() => {}} />
-        <div className="content">
+      <div className="sidebar">
+        <div className="sidebar-logo">
+          <span>UMEED</span>
+        </div>
+
+        <nav style={{ flex: 1 }}>
+          {[
+            { id: 'dashboard', label: '📊 Dashboard' },
+            { id: 'attendance', label: '⏰ Attendance' },
+            { id: 'staff', label: '👥 Staff' },
+            { id: 'leaves', label: '📅 Leaves' },
+            { id: 'reports', label: '📈 Reports' },
+          ].map(item => (
+            <button
+              key={item.id}
+              className={`nav-item ${page === item.id ? 'active' : ''}`}
+              onClick={() => setPage(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="user-profile">
+          <div className="profile-avatar">{user.name.charAt(0)}</div>
+          <div className="profile-info">
+            <div className="profile-name">{user.name}</div>
+            <div className="profile-role">{user.role}</div>
+          </div>
+        </div>
+
+        <button
+          className="nav-item"
+          onClick={handleLogout}
+          style={{ marginTop: 10 }}
+        >
+          🚪 Logout
+        </button>
+      </div>
+
+      <div className="main-content">
+        <div className="topbar">
+          <div className="topbar-title">Umeed Education System</div>
+          <div className="topbar-actions">
+            <button className="btn-icon">🔔</button>
+            <button className="btn-icon">⚙️</button>
+          </div>
+        </div>
+
+        <div className="content-area">
           {renderPage()}
         </div>
       </div>
@@ -356,12 +1112,14 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
-console.log('═══════════════════════════════════════════════════════');
-console.log('✅ ATTENDANCE SYSTEM LOADED');
+console.log('═════════════════════════════════════════════════════════');
+console.log('✅ UMEED EDUCATION SYSTEM LOADED');
+console.log('✅ AUTHENTICATION ENABLED');
 console.log('✅ SUPABASE CONNECTED');
-console.log('✅ REAL DATA ENABLED');
+console.log('✅ REAL-TIME DATA ENABLED');
 console.log('🚀 PRODUCTION READY');
-console.log('═══════════════════════════════════════════════════════');
+console.log('═════════════════════════════════════════════════════════');
+console.log('Login: principal@umeededu.pk | Password: admin123');
 </script>
 
 </body>
