@@ -149,7 +149,111 @@
     .chart-wrap{height:280px}
     .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
+    .staff-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+    .staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+    .staff-card{background:linear-gradient(145deg,rgba(28,22,36,.95),rgba(16,13,23,.95));border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:14px}
+    .staff-card h4{font-size:20px;margin-bottom:4px}
+    .staff-meta{display:grid;gap:6px;font-size:13px;color:#cfc7dc;margin:10px 0}
+    .pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid}
+    .pill.active{color:#7df3b4;border-color:rgba(37,207,122,.55);background:rgba(37,207,122,.12)}
+    .pill.inactive{color:#ffb7b7;border-color:rgba(255,104,104,.6);background:rgba(255,104,104,.12)}
+    .staff-actions{display:flex;gap:8px;margin-top:10px}
+    .btn-ghost{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#ddd5ea;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+    .btn-danger{border:1px solid rgba(255,104,104,.45);background:rgba(196,30,48,.2);color:#ffb2b2;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+
+    .modal-backdrop{position:fixed;inset:0;background:rgba(5,4,9,.72);display:grid;place-items:center;z-index:50;padding:18px}
+    .modal-card{width:min(900px,100%);max-height:92vh;overflow:auto;background:linear-gradient(145deg,rgba(25,20,34,.98),rgba(16,12,23,.98));border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .modal-grid{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:12px}
+    .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+    .field-error{color:#ff9ea8;font-size:12px;margin-top:4px}
+    .req{color:#ff6f7f;margin-left:3px}
+    .input.invalid,.mini-input.invalid{border-color:rgba(255,104,104,.7);box-shadow:0 0 0 2px rgba(255,104,104,.12)}
+
+    .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:999px;display:inline-block;animation:spin .8s linear infinite;vertical-align:middle}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .btn-loading{display:inline-flex;align-items:center;gap:8px;justify-content:center}
+    .modal-overlay-loader{position:absolute;inset:0;display:grid;place-items:center;background:rgba(9,7,14,.5);backdrop-filter:blur(2px);border-radius:20px;z-index:3}
+    .modal-card.has-overlay{position:relative}
+
+    .skeleton{position:relative;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px}
+    .skeleton::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);animation:sheen 1.2s infinite}
+    @keyframes sheen{100%{transform:translateX(100%)}}
+    .skeleton-row{height:14px;margin-bottom:8px}
+    .skeleton-row:last-child{margin-bottom:0}
+
+    .toast-wrap{position:fixed;top:16px;right:16px;display:grid;gap:8px;z-index:70}
+    .toast{min-width:260px;max-width:360px;border-radius:12px;padding:12px 14px;font-weight:600;border:1px solid}
+    .toast.success{background:rgba(37,207,122,.16);border-color:rgba(37,207,122,.5);color:#a9f5cd}
+    .toast.error{background:rgba(255,104,104,.16);border-color:rgba(255,104,104,.5);color:#ffbebe}
+    .toast.warning{background:rgba(244,186,61,.16);border-color:rgba(244,186,61,.5);color:#f5d898}
+
+    .attendance-shell{display:grid;gap:14px}
+    .attendance-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+    .attendance-filters{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+    .mini-field{display:grid;gap:6px}
+    .mini-field label{font-size:11px;letter-spacing:1.4px;color:#a99fbc;font-weight:700}
+    .mini-input{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:#fff;border-radius:10px;padding:10px 12px}
+    .attendance-table-wrap{background:linear-gradient(145deg,rgba(24,19,32,.95),rgba(14,11,22,.95));border:1px solid rgba(255,255,255,.11);border-radius:16px;overflow:auto}
+    .attendance-table{width:100%;border-collapse:collapse;min-width:920px}
+    .attendance-table th,.attendance-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;vertical-align:middle}
+    .attendance-table th{text-align:left;color:#b6aec6;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+    .attendance-table tr:last-child td{border-bottom:none}
+    .status-pill{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,.2)}
+    .st-present{color:#7df3b4;background:rgba(37,207,122,.16);border-color:rgba(37,207,122,.5)}
+    .st-absent{color:#ffb7b7;background:rgba(255,104,104,.14);border-color:rgba(255,104,104,.55)}
+    .st-late{color:#ffd17f;background:rgba(244,186,61,.14);border-color:rgba(244,186,61,.55)}
+    .st-leave{color:#9cc8ff;background:rgba(85,143,255,.14);border-color:rgba(85,143,255,.48)}
+    .method-chip{display:inline-flex;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:11px;font-weight:700}
+    .method-manual{color:#f7d676;background:rgba(212,175,55,.16);border-color:rgba(212,175,55,.5)}
+    .method-fingerprint{color:#abf1c9;background:rgba(37,207,122,.12);border-color:rgba(37,207,122,.4)}
+    .manual-toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:10px 0 8px}
+    .bulk-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .manual-grid{border:1px solid rgba(255,255,255,.12);border-radius:14px;overflow:auto;max-height:56vh}
+    .manual-row{display:grid;grid-template-columns:220px 140px 160px 1fr 220px 220px 30px;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .manual-row.head{position:sticky;top:0;background:rgba(10,8,16,.95);z-index:2;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#b7adc8;font-weight:700}
+    .manual-row:last-child{border-bottom:none}
+    .status-group{display:flex;gap:6px;flex-wrap:wrap}
+    .status-btn{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:#d9d1e7;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer}
+    .status-btn.active{background:linear-gradient(130deg,#d8253e,var(--maroon));border-color:rgba(216,37,62,.7);color:#fff}
+    .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .saved-check{color:#7df3b4;font-weight:800;font-size:18px;text-align:center}
+    .manual-warning{font-size:11px;color:#ffbfbf;margin-top:4px}
+    .progress-inline{display:flex;align-items:center;gap:8px;color:#e6dcb1;font-weight:700}
+    .menu-badge{min-width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:rgba(212,175,55,.2);border:1px solid rgba(212,175,55,.55);color:#f5dc8f;font-size:11px;font-weight:800;padding:0 6px}
+    .pending-banner{margin-top:10px;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.4);color:#f1d47d;font-size:12px;font-weight:700}
+    .leave-dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .mini-list{display:grid;gap:8px}
+    .mini-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02)}
+
+    .leave-shell{display:grid;gap:14px}
+    .leave-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .leave-tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .leave-tab{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:#d4ccdf;border-radius:999px;padding:8px 13px;font-weight:700;cursor:pointer}
+    .leave-tab.active{background:linear-gradient(130deg,#d8253e,var(--maroon));border-color:rgba(216,37,62,.72);color:#fff}
+    .leave-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+    .leave-card{background:linear-gradient(145deg,rgba(24,19,32,.95),rgba(14,11,22,.95));border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:14px;display:grid;gap:9px}
+    .leave-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+    .leave-type{display:inline-flex;padding:4px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+    .leave-type.sick{background:rgba(255,104,104,.16);border-color:rgba(255,104,104,.55);color:#ffb9b9}
+    .leave-type.casual{background:rgba(85,143,255,.15);border-color:rgba(85,143,255,.45);color:#b7d2ff}
+    .leave-type.annual{background:rgba(37,207,122,.15);border-color:rgba(37,207,122,.45);color:#9ef0c6}
+    .leave-type.emergency{background:rgba(244,186,61,.14);border-color:rgba(244,186,61,.45);color:#f4d898}
+    .leave-type.unpaid{background:rgba(154,140,193,.16);border-color:rgba(154,140,193,.45);color:#d9d0f2}
+    .leave-meta{display:grid;gap:4px;color:#cec6dc;font-size:13px}
+    .leave-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+    .btn-success{border:1px solid rgba(37,207,122,.5);background:rgba(37,207,122,.17);color:#a7f7cb;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+    .leave-calendar{background:linear-gradient(145deg,rgba(23,18,30,.95),rgba(14,11,21,.95));border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+    .cal-head{font-size:11px;color:#a89fb8;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:4px 2px}
+    .cal-cell{min-height:84px;border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:8px;background:rgba(255,255,255,.02)}
+    .cal-day{font-size:12px;color:#cfc7de;margin-bottom:6px}
+    .cal-chip{display:block;font-size:10px;border-radius:8px;padding:3px 6px;margin-bottom:4px;background:rgba(196,30,48,.22);border:1px solid rgba(196,30,48,.45);color:#ffced4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
     @media (max-width: 1200px){
+      .leave-dashboard-grid{grid-template-columns:1fr}
+      .leave-grid{grid-template-columns:1fr}
       .login-layout{grid-template-columns:1fr}
       .login-left{display:none}
       .stats4,.report-grid{grid-template-columns:repeat(2,1fr)}
@@ -264,14 +368,21 @@ function Login({onAuth}){
   );
 }
 
-function Sidebar({page,setPage,user,onLogout}){
+function Sidebar({page,setPage,user,onLogout,pendingLeaveCount}){
   const menu=[
     ["MAIN MENU",[{id:"dashboard",label:"Dashboard",ic:"◻"},{id:"attendance",label:"Attendance",ic:"◴"},{id:"staff",label:"Staff",ic:"◌"},{id:"leave",label:"Leave Mgmt",ic:"◫"},{id:"reports",label:"Reports",ic:"▮"},{id:"documents",label:"Documents",ic:"◨"}]],
     ["SYSTEM",[{id:"settings",label:"Settings",ic:"⚙"},{id:"security",label:"Security",ic:"⬟"}]],
   ];
   return <div className="sidebar">
     <div className="logo-block"><img src={LOGO} alt="umeed"/><div className="logo-lines"><strong>Umeed</strong><span>EDUCATION SYSTEM</span></div></div>
-    {menu.map(([g,items])=><div className="menu-group" key={g}><div className="menu-tag">{g}</div>{items.map(m=><button key={m.id} className={`menu-btn ${page===m.id?"active":""}`} onClick={()=>setPage(m.id)}><span className="ic">{m.ic}</span>{m.label}</button>)}</div>)}
+    {menu.map(([g,items])=><div className="menu-group" key={g}><div className="menu-tag">{g}</div>{items.map(m=>{
+      const showPending=m.id==='leave' && user?.role==='admin' && pendingLeaveCount>0;
+      return <button key={m.id} className={`menu-btn ${page===m.id?"active":""}`} onClick={()=>setPage(m.id)}>
+        <span className="ic">{m.ic}</span>
+        <span style={{flex:1}}>{m.label}</span>
+        {showPending && <span className="menu-badge">{pendingLeaveCount}</span>}
+      </button>;
+    })}</div>)}
     <div className="profile-panel"><div className="av">{initials(user.name)}</div><div><div style={{fontWeight:700}}>{user.name}</div><div style={{color:"#b6aeca",fontSize:12}}>{user.role.toUpperCase()} · Principal</div></div></div>
     <button className="logout" onClick={onLogout}>Sign Out</button>
   </div>;
@@ -288,14 +399,15 @@ function TopBar({user,dark,setDark}){
   </div>;
 }
 
-function DashboardPage({stats,attendanceLogs,onQuickMark,role}){
+function DashboardPage({stats,attendanceLogs,onQuickMark,onManualEntry,role,pendingLeaveCount,onLeaveTodayRows,upcomingLeaves}){
   return <>
     <div className="page-head"><div><h1>Dashboard</h1><p>Umeed Education System · {fmtDate()}</p></div></div>
     <div className="greet">
       <div>
         <h3>Good morning, {role==="admin"?"Admin":"Staff"}</h3>
         <div className="muted">{fmtDate()} · School Day · Assembly at 07:45</div>
-        <div className="actions"><button className="btn-gold" onClick={()=>onQuickMark("present")}>📷 Camera Attendance</button><button className="btn-maroon" onClick={()=>onQuickMark("present")}>Manual Entry</button></div>
+        <div className="actions"><button className="btn-gold" onClick={()=>onQuickMark("present")}>📷 Camera Attendance</button><button className="btn-maroon" onClick={onManualEntry}>Manual Entry</button></div>
+        {role==='admin' && <div className="pending-banner">{pendingLeaveCount} pending leave request{pendingLeaveCount===1?'':'s'}</div>}
       </div>
       <div className="sum-row">
         {[[stats.totalStaff,"Total Staff"],[stats.presentToday,"Present"],[stats.absentToday,"Absent"],[stats.lateToday,"Late"],[stats.onLeaveToday,"On Leave"]].map(([v,l])=><div key={l} className="sum-item"><strong>{v}</strong><span>{l}</span></div>)}
@@ -307,6 +419,19 @@ function DashboardPage({stats,attendanceLogs,onQuickMark,role}){
       <div className="stat"><div>👥</div><div className="v">{stats.presentToday}</div><div className="l">Present Today</div><div className="trend up">↗ +{stats.deltaPresent} vs yesterday</div></div>
       <div className="stat"><div>🕒</div><div className="v">{stats.absentToday}</div><div className="l">Absent Today</div><div className="trend down">↘ {stats.deltaAbsentText}</div></div>
       <div className="stat"><div>☆</div><div className="v">{stats.lateToday}</div><div className="l">Late Arrivals</div><div className="trend up">↗ -{stats.deltaLate} vs yesterday</div></div>
+    </div>
+
+    <div className="leave-dashboard-grid">
+      <div className="chart-card">
+        <div style={{fontFamily:'Playfair Display,serif',fontSize:30,marginBottom:8}}>On Leave Today</div>
+        <div className="muted" style={{marginBottom:10}}>{stats.onLeaveToday} staff on approved leave</div>
+        {onLeaveTodayRows.length===0?<div className="muted">No one is on leave today.</div>:<div className="mini-list">{onLeaveTodayRows.map(row=><div className="mini-row" key={row.id}><div><b>{row.staff_name}</b><div className="muted" style={{fontSize:12}}>{row.employee_id||'—'} · {row.leave_type||'Leave'}</div></div><div className="status-pill st-leave">On Leave</div></div>)}</div>}
+      </div>
+      <div className="chart-card">
+        <div style={{fontFamily:'Playfair Display,serif',fontSize:30,marginBottom:8}}>Upcoming Leaves</div>
+        <div className="muted" style={{marginBottom:10}}>Next approved leave schedule</div>
+        {upcomingLeaves.length===0?<div className="muted">No upcoming approved leaves.</div>:<div className="mini-list">{upcomingLeaves.map(row=><div className="mini-row" key={row.id}><div><b>{row.staff_name}</b><div className="muted" style={{fontSize:12}}>{row.leave_type||'Leave'} · {row.start_date} → {row.end_date}</div></div><div>{row.days}d</div></div>)}</div>}
+      </div>
     </div>
 
     <div className="device">
@@ -364,6 +489,481 @@ function ReportsPage({report,period,setPeriod}){
   </>;
 }
 
+const STAFF_DEPARTMENTS=[
+  'Administration',
+  'Teaching Staff',
+  'Support Staff',
+  'IT & Tech',
+  'Accounts & Finance',
+  'Security'
+];
+
+const makeEmptyStaffForm=(employeeId='')=>({
+  id:'',
+  user_id:'',
+  full_name:'',
+  email:'',
+  department:'Administration',
+  designation:'',
+  phone:'',
+  employee_id:employeeId,
+  join_date:new Date().toISOString().slice(0,10),
+  status:'Active'
+});
+
+const emailRe=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const pakPhoneRe=/^(?:\+92|0)3\d{2}-?\d{7}$/;
+const ATTENDANCE_STATUSES=['Present','Absent','Late','On Leave'];
+
+const normalizePkPhone=(v='')=>{
+  const raw=String(v||'').trim().replace(/\s+/g,'');
+  if(!raw) return '';
+  if(raw.startsWith('+92')) return raw;
+  if(raw.startsWith('92')) return `+${raw}`;
+  if(raw.startsWith('0')) return raw;
+  return raw;
+};
+
+const mapFriendlyError=(err)=>{
+  const msg=String(err?.message||err?.details||err||'').toLowerCase();
+  if(msg.includes('duplicate') && msg.includes('email')) return 'This email is already registered';
+  if(msg.includes('users_email_key') || msg.includes('email_key')) return 'This email is already registered';
+  if((msg.includes('duplicate') || msg.includes('unique')) && (msg.includes('employee_id') || msg.includes('employee id'))) return 'Employee ID already exists';
+  if(msg.includes('failed to fetch') || msg.includes('network') || msg.includes('fetcherror')) return 'Connection failed. Please check internet.';
+  if(msg.includes('permission') || msg.includes('not allowed') || msg.includes('forbidden') || msg.includes('unauthorized') || msg.includes('row-level security')) return "You don't have permission for this action";
+  return err?.message || 'Something went wrong. Please try again.';
+};
+
+const todayDateKey=()=>new Date().toISOString().slice(0,10);
+const toDateInput=(val)=>{
+  if(!val) return '';
+  const dt=new Date(val);
+  if(Number.isNaN(dt.getTime())) return String(val).slice(0,10);
+  return dt.toISOString().slice(0,10);
+};
+const toTimeInput=(val)=>{
+  if(!val) return '';
+  if(/^\d{2}:\d{2}/.test(String(val))) return String(val).slice(0,5);
+  const dt=new Date(val);
+  if(Number.isNaN(dt.getTime())) return '';
+  return `${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
+};
+const combineDateAndTime=(dateStr,timeStr)=>{
+  if(!dateStr || !timeStr) return null;
+  const dt=new Date(`${dateStr}T${timeStr}:00`);
+  if(Number.isNaN(dt.getTime())) return null;
+  return dt.toISOString();
+};
+const normalizeStatus=(status='')=>String(status).toLowerCase().replace(/\s+/g,'_');
+const isFutureDate=(dateStr)=>dateStr>todayDateKey();
+const statusClassName=(status)=>{
+  const norm=normalizeStatus(status);
+  if(norm==='present') return 'st-present';
+  if(norm==='absent') return 'st-absent';
+  if(norm==='late') return 'st-late';
+  if(norm==='on_leave') return 'st-leave';
+  return '';
+};
+
+const LEAVE_TYPES=['Sick Leave','Casual Leave','Annual Leave','Emergency Leave','Unpaid Leave'];
+const LEAVE_FILTERS=['all','pending','approved','rejected','cancelled'];
+const leaveStatusClass=(status)=>{
+  const norm=normalizeStatus(status);
+  if(norm==='approved') return 'st-present';
+  if(norm==='pending') return 'st-late';
+  if(norm==='rejected') return 'st-absent';
+  if(norm==='cancelled') return 'st-leave';
+  return '';
+};
+const leaveTypeClass=(type='')=>{
+  const norm=String(type).toLowerCase();
+  if(norm.includes('sick')) return 'sick';
+  if(norm.includes('casual')) return 'casual';
+  if(norm.includes('annual')) return 'annual';
+  if(norm.includes('emergency')) return 'emergency';
+  return 'unpaid';
+};
+const dayDiffInclusive=(startDate,endDate)=>{
+  if(!startDate || !endDate) return 0;
+  const s=new Date(`${startDate}T00:00:00`);
+  const e=new Date(`${endDate}T00:00:00`);
+  if(Number.isNaN(s.getTime()) || Number.isNaN(e.getTime()) || e<s) return 0;
+  return Math.floor((e-s)/86400000)+1;
+};
+const humanDateRange=(startDate,endDate)=>{
+  if(!startDate || !endDate) return '—';
+  const s=new Date(`${startDate}T00:00:00`);
+  const e=new Date(`${endDate}T00:00:00`);
+  const fmt=(d)=>new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric'}).format(d);
+  return `${fmt(s)} - ${fmt(e)} (${dayDiffInclusive(startDate,endDate)} day${dayDiffInclusive(startDate,endDate)===1?'':'s'})`;
+};
+const toIsoNow=()=>new Date().toISOString();
+const eachDateInRange=(startDate,endDate)=>{
+  const days=[];
+  if(!startDate || !endDate) return days;
+  let cursor=new Date(`${startDate}T00:00:00`);
+  const end=new Date(`${endDate}T00:00:00`);
+  while(cursor<=end){
+    days.push(cursor.toISOString().slice(0,10));
+    cursor=new Date(cursor.getTime()+86400000);
+  }
+  return days;
+};
+
+function ToastHost({toasts,onDismiss}){
+  if(!toasts.length) return null;
+  return <div className="toast-wrap">{toasts.map(t=><div key={t.id} className={`toast ${t.type||'success'}`}><div style={{display:'flex',justifyContent:'space-between',gap:8,alignItems:'center'}}><span>{t.message}</span><div style={{display:'flex',gap:8}}>{t.onUndo && <button className="btn-ghost" style={{padding:'2px 8px',fontSize:12}} onClick={t.onUndo}>Undo</button>}<button className="btn-ghost" style={{padding:'2px 8px',fontSize:12}} onClick={()=>onDismiss(t.id)}>✕</button></div></div></div>)}</div>;
+}
+
+function ModalOverlayLoader({show,label}){
+  if(!show) return null;
+  return <div className="modal-overlay-loader"><div className="progress-inline"><span className="spinner"></span>{label||'Processing...'}</div></div>;
+}
+
+function StaffSkeletonGrid(){
+  return <div className="staff-grid">{Array.from({length:6}).map((_,idx)=><div key={idx} className="staff-card skeleton" style={{minHeight:170}}><div className="skeleton-row" style={{width:'65%',height:18,marginTop:4}}></div><div className="skeleton-row" style={{width:'35%'}}></div><div className="skeleton-row" style={{width:'90%'}}></div><div className="skeleton-row" style={{width:'75%'}}></div><div className="skeleton-row" style={{width:'50%'}}></div></div>)}</div>;
+}
+
+function AttendanceSkeletonTable(){
+  return <div className="attendance-table-wrap skeleton" style={{padding:14}}>{Array.from({length:8}).map((_,idx)=><div key={idx} className="skeleton-row" style={{height:16,width:`${85-(idx%3)*9}%`}}></div>)}</div>;
+}
+
+function LeaveSkeletonList(){
+  return <div className="leave-grid">{Array.from({length:4}).map((_,idx)=><div key={idx} className="leave-card skeleton" style={{minHeight:150}}><div className="skeleton-row" style={{width:'45%',height:16}}></div><div className="skeleton-row" style={{width:'70%'}}></div><div className="skeleton-row" style={{width:'95%'}}></div><div className="skeleton-row" style={{width:'80%'}}></div></div>)}</div>;
+}
+
+function StaffModal({open,mode,form,errors,submitting,onRequestClose,onChange,onBlurField,onSubmit,onGenerateId,isSubmitDisabled}){
+  const firstInputRef=useRef(null);
+  useEffect(()=>{ if(open) setTimeout(()=>firstInputRef.current?.focus?.(),50); },[open]);
+  if(!open) return null;
+  return <div className="modal-backdrop" onClick={(e)=>{if(e.target===e.currentTarget) onRequestClose('backdrop');}}>
+    <div className={`modal-card ${submitting?'has-overlay':''}`}>
+      <ModalOverlayLoader show={submitting} label="Saving staff record..."/>
+      <div className="modal-head">
+        <h3 style={{fontFamily:'Playfair Display,serif',fontSize:36}}>{mode==='edit'?'Edit Staff':'Add Staff'}</h3>
+        <button className="btn-ghost" onClick={()=>onRequestClose('close')} disabled={submitting}>Close</button>
+      </div>
+
+      <div className="modal-grid">
+        <div className="field"><label>FULL NAME <span className="req">*</span></label><input ref={firstInputRef} className={`input ${errors.full_name?'invalid':''}`} value={form.full_name} onBlur={()=>onBlurField('full_name')} onChange={e=>onChange('full_name',e.target.value)} placeholder="Enter full name" />{errors.full_name&&<div className="field-error">{errors.full_name}</div>}</div>
+        <div className="field"><label>EMAIL <span className="req">*</span></label><input className={`input ${errors.email?'invalid':''}`} value={form.email} onBlur={()=>onBlurField('email')} onChange={e=>onChange('email',e.target.value)} placeholder="firstname.lastname@umeed.pk" />{errors.email&&<div className="field-error">{errors.email}</div>}</div>
+        <div className="field"><label>DEPARTMENT <span className="req">*</span></label><select className={`input ${errors.department?'invalid':''}`} value={form.department} onBlur={()=>onBlurField('department')} onChange={e=>onChange('department',e.target.value)}>{STAFF_DEPARTMENTS.map(dep=><option key={dep} value={dep}>{dep}</option>)}</select>{errors.department&&<div className="field-error">{errors.department}</div>}</div>
+        <div className="field"><label>DESIGNATION</label><input className="input" value={form.designation} onChange={e=>onChange('designation',e.target.value)} placeholder="e.g. Teacher / Coordinator" /></div>
+        <div className="field"><label>PHONE <span className="req">*</span></label><input className={`input ${errors.phone?'invalid':''}`} value={form.phone} onBlur={()=>onBlurField('phone')} onChange={e=>onChange('phone',e.target.value)} placeholder="0300-1234567 or +923001234567" />{errors.phone&&<div className="field-error">{errors.phone}</div>}</div>
+        <div className="field"><label>EMPLOYEE ID <span className="req">*</span></label><div style={{display:'flex',gap:8}}><input className={`input ${errors.employee_id?'invalid':''}`} value={form.employee_id} onBlur={()=>onBlurField('employee_id')} onChange={e=>onChange('employee_id',e.target.value.toUpperCase())} placeholder="UES-001" /><button type="button" className="btn-ghost" onClick={onGenerateId} disabled={submitting}>Auto</button></div>{errors.employee_id&&<div className="field-error">{errors.employee_id}</div>}</div>
+        <div className="field"><label>JOIN DATE</label><input type="date" className="input" value={form.join_date||''} onChange={e=>onChange('join_date',e.target.value)} /></div>
+        <div className="field"><label>STATUS</label><select className="input" value={form.status} onChange={e=>onChange('status',e.target.value)}><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
+      </div>
+
+      <div className="modal-actions">
+        <button className="btn-ghost" onClick={()=>onRequestClose('cancel')} disabled={submitting}>Cancel</button>
+        <button className="btn-maroon btn-loading" onClick={onSubmit} disabled={submitting || isSubmitDisabled}>{submitting?<><span className="spinner"></span> Saving...</>:mode==='edit'?'Update Staff':'Save Staff'}</button>
+      </div>
+    </div>
+  </div>;
+}
+
+function DeleteConfirmModal({open,name,loading,onCancel,onConfirm}){
+  if(!open) return null;
+  return <div className="modal-backdrop" onClick={(e)=>{if(e.target===e.currentTarget) onCancel();}}>
+    <div className="modal-card" style={{maxWidth:520}}>
+      <div className="modal-head"><h3 style={{fontFamily:'Playfair Display,serif',fontSize:32}}>Delete Staff</h3></div>
+      <p style={{color:'#c7bfd5',fontSize:16}}>Are you sure you want to delete <b>{name||'this staff member'}</b>?</p>
+      <div className="modal-actions">
+        <button className="btn-ghost" onClick={onCancel} disabled={loading}>Cancel</button>
+        <button className="btn-danger" onClick={onConfirm} disabled={loading}>{loading?<><span className="spinner"></span> Deleting...</>:'Delete'}</button>
+      </div>
+    </div>
+  </div>;
+}
+
+function StaffPage({staff,onAddClick,onEditClick,onDeleteClick,loading}){
+  const rows=staff||[];
+  return <>
+    <div className="page-head"><div><h1>Staff</h1><p>Manage staff directory, roles and employment records.</p></div></div>
+    <div className="staff-toolbar">
+      <div className="muted">Total staff records: <b style={{color:'#fff'}}>{rows.length}</b></div>
+      <button className="btn-maroon" onClick={onAddClick}>+ Add Staff</button>
+    </div>
+    {loading?<StaffSkeletonGrid/>:(rows.length===0?<div className="chart-card"><div className="muted">No staff records found. Add your first staff member.</div></div>:<div className="staff-grid">{rows.map(s=>{
+      const status=(s.status||'Active').toString();
+      return <div className="staff-card" key={s.id||s.email}>
+        <h4>{s.full_name||s.name||'Unnamed Staff'}</h4>
+        <div className={`pill ${status.toLowerCase()==='active'?'active':'inactive'}`}>{status}</div>
+        <div className="staff-meta">
+          <div><b>Email:</b> {s.email||'—'}</div>
+          <div><b>Department:</b> {s.department||'—'}</div>
+          <div><b>Designation:</b> {s.designation||'—'}</div>
+          <div><b>Employee ID:</b> {s.employee_id||'—'}</div>
+          <div><b>Join Date:</b> {s.join_date?new Date(s.join_date).toLocaleDateString():'—'}</div>
+          <div><b>Phone:</b> {s.phone||'—'}</div>
+        </div>
+        <div className="staff-actions">
+          <button className="btn-ghost" onClick={()=>onEditClick(s)}>Edit</button>
+          <button className="btn-danger" onClick={()=>onDeleteClick(s)}>Delete</button>
+        </div>
+      </div>;
+    })}</div>)}
+  </>;
+}
+
+function AttendancePage({rows,staffMap,fromDate,toDate,onChangeFrom,onChangeTo,onOpenManualEntry,loading}){
+  const filtered=rows.filter(r=>{
+    const dateKey=toDateInput(r.date||r.created_at||'');
+    if(!dateKey) return false;
+    return (!fromDate || dateKey>=fromDate) && (!toDate || dateKey<=toDate);
+  });
+
+  const summary=filtered.reduce((acc,row)=>{
+    const status=normalizeStatus(row.status);
+    if(status==='present') acc.present+=1;
+    if(status==='absent') acc.absent+=1;
+    if(status==='late') acc.late+=1;
+    if(status==='on_leave') acc.leave+=1;
+    return acc;
+  },{present:0,absent:0,late:0,leave:0});
+
+  return <div className="attendance-shell">
+    <div className="page-head"><div><h1>Attendance</h1><p>Device logs and manual entries are unified in this view.</p></div></div>
+
+    <div className="attendance-toolbar">
+      <div className="attendance-filters">
+        <div className="mini-field"><label>FROM DATE</label><input type="date" className="mini-input" value={fromDate} onChange={e=>onChangeFrom(e.target.value)} max={todayDateKey()}/></div>
+        <div className="mini-field"><label>TO DATE</label><input type="date" className="mini-input" value={toDate} onChange={e=>onChangeTo(e.target.value)} max={todayDateKey()}/></div>
+      </div>
+      <div style={{display:'flex',gap:8,alignItems:'center'}}>
+        <span className="muted">{filtered.length} records</span>
+        <button className="btn-maroon" onClick={onOpenManualEntry}>+ Manual Entry</button>
+      </div>
+    </div>
+
+    <div className="stats4" style={{marginTop:0}}>
+      <div className="stat"><div className="muted">Present</div><div className="v" style={{color:'#38d689'}}>{summary.present}</div></div>
+      <div className="stat"><div className="muted">Absent</div><div className="v" style={{color:'#ff8b8b'}}>{summary.absent}</div></div>
+      <div className="stat"><div className="muted">Late</div><div className="v" style={{color:'#f2c25c'}}>{summary.late}</div></div>
+      <div className="stat"><div className="muted">On Leave</div><div className="v" style={{color:'#8ec0ff'}}>{summary.leave}</div></div>
+    </div>
+
+    {loading?<AttendanceSkeletonTable/>:<div className="attendance-table-wrap">
+      <table className="attendance-table">
+        <thead><tr><th>Date</th><th>Name</th><th>Employee ID</th><th>Department</th><th>Status</th><th>Check In</th><th>Check Out</th><th>Verification</th></tr></thead>
+        <tbody>
+          {filtered.length===0 && <tr><td colSpan="8" className="muted">No attendance records in selected date range.</td></tr>}
+          {filtered.map((row,i)=>{
+            const st=staffMap.get(row.staff_id)||{};
+            const status=row.status||'—';
+            const method=row.verification_method || row.method || 'Fingerprint';
+            const methodNorm=String(method).toLowerCase()==='manual'?'method-manual':'method-fingerprint';
+            const dateText=row.date?new Date(row.date).toLocaleDateString():new Date(row.created_at||Date.now()).toLocaleDateString();
+            const inText=row.check_in?new Date(row.check_in).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+            const outText=row.check_out?new Date(row.check_out).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—';
+            return <tr key={row.id||`${row.staff_id||'row'}-${i}`}>
+              <td>{dateText}</td>
+              <td>{st.full_name||row.staff_name||row.full_name||row.name||'Unknown Staff'}</td>
+              <td>{st.employee_id||row.employee_id||row.staff_id||'—'}</td>
+              <td>{st.department||row.department||'—'}</td>
+              <td><span className={`status-pill ${statusClassName(status)}`}>{status}</span></td>
+              <td>{inText}</td>
+              <td>{outText}</td>
+              <td><span className={`method-chip ${methodNorm}`}>{method}</span></td>
+            </tr>;
+          })}
+        </tbody>
+      </table>
+    </div>}
+  </div>;
+}
+
+function ManualEntryModal({
+  open,selectedDate,onDateChange,onClose,rows,markedCount,totalStaff,onMarkAllPresent,onMarkAllAbsent,onClearAll,onStatusChange,onTimeChange,onSave,saving,progressText
+}){
+  if(!open) return null;
+  return <div className="modal-backdrop" onClick={(e)=>{if(e.target===e.currentTarget && !saving) onClose();}}>
+    <div className="modal-card" style={{width:'min(1200px,100%)'}}>
+      <div className="modal-head">
+        <h3 style={{fontFamily:'Playfair Display,serif',fontSize:34}}>Manual Attendance Entry</h3>
+        <button className="btn-ghost" onClick={onClose} disabled={saving}>Close</button>
+      </div>
+
+      <div className="manual-toolbar">
+        <div className="attendance-filters">
+          <div className="mini-field"><label>ATTENDANCE DATE</label><input type="date" className="mini-input" value={selectedDate} max={todayDateKey()} onChange={e=>onDateChange(e.target.value)} disabled={saving}/></div>
+          <div className="muted" style={{fontWeight:700}}>{markedCount}/{totalStaff} marked</div>
+        </div>
+        <div className="bulk-actions">
+          <button className="btn-ghost" onClick={onMarkAllPresent} disabled={saving}>Mark All Present</button>
+          <button className="btn-ghost" onClick={onMarkAllAbsent} disabled={saving}>Mark All Absent</button>
+          <button className="btn-danger" onClick={onClearAll} disabled={saving}>Clear All</button>
+          <button className="btn-maroon" onClick={onSave} disabled={saving}>{saving?<><span className="spinner"></span> Saving...</>:'Save Attendance'}</button>
+        </div>
+      </div>
+
+      {saving && <div className="progress-inline" style={{marginBottom:8}}><span className="spinner"></span>{progressText||'Saving attendance...'}</div>}
+
+      <div className="manual-grid">
+        <div className="manual-row head"><div>Name</div><div>Employee ID</div><div>Department</div><div>Status</div><div>Check In / Out</div><div>Notes</div><div>✓</div></div>
+        {rows.length===0 && <div className="manual-row"><div className="muted">No staff found.</div></div>}
+        {rows.map(row=>{
+          const norm=normalizeStatus(row.status);
+          const showTimes=norm==='present'||norm==='late';
+          return <div className="manual-row" key={row.staff_id}>
+            <div><div style={{fontWeight:700}}>{row.full_name}</div></div>
+            <div>{row.employee_id||'—'}</div>
+            <div>{row.department||'—'}</div>
+            <div className="status-group">{ATTENDANCE_STATUSES.map(st=>{
+              const active=normalizeStatus(st)===norm;
+              return <button key={st} className={`status-btn ${active?'active':''}`} onClick={()=>onStatusChange(row.staff_id,st)} disabled={saving}>{st}</button>;
+            })}</div>
+            <div>{showTimes?<div className="time-grid">
+              <input type="time" className="mini-input" value={row.check_in} onChange={e=>onTimeChange(row.staff_id,'check_in',e.target.value)} disabled={saving}/>
+              <input type="time" className="mini-input" value={row.check_out} onChange={e=>onTimeChange(row.staff_id,'check_out',e.target.value)} disabled={saving}/>
+            </div>:<span className="muted">No time required</span>}</div>
+            <div>
+              {row.auto_leave && <div className="muted" style={{fontSize:11}}>Approved leave auto-marked</div>}
+              {row.overwrite_device && <div className="manual-warning">Will overwrite fingerprint record</div>}
+              {row.existing_id && !row.overwrite_device && <div className="muted" style={{fontSize:11}}>Existing record will update</div>}
+            </div>
+            <div>{row.existing_id?<span className="saved-check">✓</span>:''}</div>
+          </div>;
+        })}
+      </div>
+    </div>
+  </div>;
+}
+
+function LeaveApplyModal({open,form,errors,submitting,onChange,onBlurField,onRequestClose,onSubmit,user,staffOptions,isSubmitDisabled}){
+  const firstInputRef=useRef(null);
+  useEffect(()=>{ if(open) setTimeout(()=>firstInputRef.current?.focus?.(),50); },[open]);
+  if(!open) return null;
+  const days=dayDiffInclusive(form.start_date,form.end_date);
+  return <div className="modal-backdrop" onClick={(e)=>{if(e.target===e.currentTarget && !submitting) onRequestClose('backdrop');}}>
+    <div className={`modal-card ${submitting?'has-overlay':''}`} style={{maxWidth:660}}>
+      <ModalOverlayLoader show={submitting} label="Submitting leave request..."/>
+      <div className="modal-head"><h3 style={{fontFamily:'Playfair Display,serif',fontSize:32}}>Apply for Leave</h3><button className="btn-ghost" onClick={()=>onRequestClose('close')} disabled={submitting}>Close</button></div>
+      <div className="modal-grid" style={{gridTemplateColumns:'1fr 1fr'}}>
+        {user?.role==='admin' && <div className="field"><label>STAFF MEMBER <span className="req">*</span></label><select ref={firstInputRef} className={`input ${errors.staff_id?'invalid':''}`} value={form.staff_id||''} onBlur={()=>onBlurField('staff_id')} onChange={e=>onChange('staff_id',e.target.value)}><option value="">Select staff</option>{(staffOptions||[]).map(s=><option key={s.id} value={s.id}>{s.full_name} ({s.employee_id||'—'})</option>)}</select>{errors.staff_id&&<div className="field-error">{errors.staff_id}</div>}</div>}
+        <div className="field"><label>LEAVE TYPE <span className="req">*</span></label><select ref={user?.role==='admin'?undefined:firstInputRef} className={`input ${errors.leave_type?'invalid':''}`} value={form.leave_type} onBlur={()=>onBlurField('leave_type')} onChange={e=>onChange('leave_type',e.target.value)}>{LEAVE_TYPES.map(t=><option key={t} value={t}>{t}</option>)}</select>{errors.leave_type&&<div className="field-error">{errors.leave_type}</div>}</div>
+        <div className="field"><label>TOTAL DAYS</label><input className="input" value={`${days||0} day${days===1?'':'s'}`} readOnly /></div>
+        <div className="field"><label>START DATE <span className="req">*</span></label><input type="date" className={`input ${errors.start_date?'invalid':''}`} min={todayDateKey()} value={form.start_date} onBlur={()=>onBlurField('start_date')} onChange={e=>onChange('start_date',e.target.value)} />{errors.start_date&&<div className="field-error">{errors.start_date}</div>}</div>
+        <div className="field"><label>END DATE <span className="req">*</span></label><input type="date" className={`input ${errors.end_date?'invalid':''}`} min={form.start_date||todayDateKey()} value={form.end_date} onBlur={()=>onBlurField('end_date')} onChange={e=>onChange('end_date',e.target.value)} />{errors.end_date&&<div className="field-error">{errors.end_date}</div>}</div>
+      </div>
+      <div className="field"><label>REASON <span className="req">*</span></label><textarea className={`input ${errors.reason?'invalid':''}`} rows="4" value={form.reason} onBlur={()=>onBlurField('reason')} onChange={e=>onChange('reason',e.target.value)} placeholder="Explain reason for leave"></textarea>{errors.reason&&<div className="field-error">{errors.reason}</div>}</div>
+      <div className="modal-actions"><button className="btn-ghost" onClick={()=>onRequestClose('cancel')} disabled={submitting}>Cancel</button><button className="btn-maroon btn-loading" onClick={onSubmit} disabled={submitting || isSubmitDisabled}>{submitting?<><span className="spinner"></span> Submitting...</>:'Submit Leave Request'}</button></div>
+    </div>
+  </div>;
+}
+
+function LeaveDecisionModal({open,mode,row,comment,setComment,submitting,onClose,onConfirm}){
+  if(!open || !row) return null;
+  const isReject=mode==='reject';
+  return <div className="modal-backdrop" onClick={(e)=>{if(e.target===e.currentTarget && !submitting) onClose();}}>
+    <div className="modal-card" style={{maxWidth:640}}>
+      <div className="modal-head"><h3 style={{fontFamily:'Playfair Display,serif',fontSize:32}}>{isReject?'Reject Leave Request':'Approve Leave Request'}</h3></div>
+      <p style={{color:'#c7bfd5',marginBottom:10}}>{isReject?`Reason for rejection for ${row.staff_name}?`:`Approve leave request for ${row.staff_name}?`}</p>
+      <div className="field"><label>{isReject?'REJECTION REASON *':'COMMENT (OPTIONAL)'}</label><textarea className="input" rows="4" value={comment} onChange={e=>setComment(e.target.value)} placeholder={isReject?'Enter rejection reason':'Add optional note'}></textarea></div>
+      <div className="modal-actions"><button className="btn-ghost" onClick={onClose} disabled={submitting}>Cancel</button><button className={isReject?'btn-danger':'btn-success'} onClick={onConfirm} disabled={submitting}>{submitting?<><span className="spinner"></span> Saving...</>:(isReject?'Reject Leave':'Approve Leave')}</button></div>
+    </div>
+  </div>;
+}
+
+function LeaveManagementPage({user,rows,filter,setFilter,onApplyClick,onApproveClick,onRejectClick,onCancelClick,pendingCount,loading}){
+  const filtered=useMemo(()=>{
+    const base=(rows||[]).filter(r=>filter==='all'?true:normalizeStatus(r.status)===filter);
+    return base.sort((a,b)=>{
+      const aPending=normalizeStatus(a.status)==='pending'?0:1;
+      const bPending=normalizeStatus(b.status)==='pending'?0:1;
+      if(aPending!==bPending) return aPending-bPending;
+      return new Date(b.applied_date||b.created_at||0)-new Date(a.applied_date||a.created_at||0);
+    });
+  },[rows,filter]);
+
+  const [calendarMonth,setCalendarMonth]=useState(()=>new Date().toISOString().slice(0,7));
+  const calendarDays=useMemo(()=>{
+    const [y,m]=calendarMonth.split('-').map(Number);
+    const start=new Date(y,m-1,1);
+    const firstDay=start.getDay();
+    const daysInMonth=new Date(y,m,0).getDate();
+    const cells=[];
+    for(let i=0;i<firstDay;i++) cells.push(null);
+    for(let d=1;d<=daysInMonth;d++) cells.push(new Date(y,m-1,d).toISOString().slice(0,10));
+    return cells;
+  },[calendarMonth]);
+
+  const byDateMap=useMemo(()=>{
+    const m=new Map();
+    (rows||[]).forEach(r=>{
+      if(normalizeStatus(r.status)!=='approved') return;
+      eachDateInRange(r.start_date,r.end_date).forEach(day=>{
+        if(day.slice(0,7)!==calendarMonth) return;
+        if(!m.has(day)) m.set(day,[]);
+        m.get(day).push(r);
+      });
+    });
+    return m;
+  },[rows,calendarMonth]);
+
+  return <div className="leave-shell">
+    <div className="page-head"><div><h1>Leave Management</h1><p>{user.role==='admin'?'Approve and monitor all staff leave requests.':'Submit and track your leave requests.'}</p></div></div>
+
+    <div className="leave-toolbar">
+      <div style={{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}}>
+        <button className="btn-maroon" onClick={onApplyClick}>+ Apply for Leave</button>
+        {user.role==='admin' && <span className="pending-banner">{pendingCount} pending request{pendingCount===1?'':'s'}</span>}
+      </div>
+      <div className="leave-tabs">{LEAVE_FILTERS.map(tab=><button key={tab} className={`leave-tab ${filter===tab?'active':''}`} onClick={()=>setFilter(tab)}>{tab[0].toUpperCase()+tab.slice(1)}</button>)}</div>
+    </div>
+
+    {loading?<LeaveSkeletonList/>:<div className="leave-grid">
+      {filtered.length===0 && <div className="chart-card"><div className="muted">No leave records for selected filter.</div></div>}
+      {filtered.map(row=>{
+        const statusNorm=normalizeStatus(row.status);
+        const canApprove=user.role==='admin' && statusNorm==='pending';
+        const canCancel=user.role!=='admin' && statusNorm==='pending';
+        return <div className="leave-card" key={row.id}>
+          <div className="leave-head"><div>
+            <div className={`leave-type ${leaveTypeClass(row.leave_type)}`}>{row.leave_type||'Leave'}</div>
+            <div style={{fontWeight:800,fontSize:18,marginTop:6}}>{user.role==='admin'?row.staff_name:'My Leave Request'}</div>
+          </div><span className={`status-pill ${leaveStatusClass(row.status)}`}>{row.status||'Pending'}</span></div>
+
+          <div className="leave-meta">
+            <div><b>Employee ID:</b> {row.employee_id||'—'}</div>
+            <div><b>Date Range:</b> {humanDateRange(row.start_date,row.end_date)}</div>
+            <div><b>Reason:</b> {row.reason||'—'}</div>
+            <div><b>Applied:</b> {row.applied_date?new Date(row.applied_date).toLocaleString():'—'}</div>
+            {row.approved_date && <div><b>Processed:</b> {new Date(row.approved_date).toLocaleString()}</div>}
+            {(row.processed_by_name || row.approved_by) && <div><b>Processed By:</b> {row.processed_by_name || row.approved_by}</div>}
+            {row.admin_comment && <div><b>Comment:</b> {row.admin_comment}</div>}
+            {row.rejection_reason && <div><b>Rejection Reason:</b> {row.rejection_reason}</div>}
+          </div>
+
+          {(canApprove || canCancel) && <div className="leave-actions">
+            {canApprove && <>
+              <button className="btn-success" onClick={()=>onApproveClick(row)}>✅ Approve</button>
+              <button className="btn-danger" onClick={()=>onRejectClick(row)}>❌ Reject</button>
+            </>}
+            {canCancel && <button className="btn-danger" onClick={()=>onCancelClick(row)}>Cancel Request</button>}
+          </div>}
+        </div>;
+      })}
+    </div>}
+
+    <div className="leave-calendar">
+      <div className="leave-toolbar" style={{marginBottom:8}}>
+        <div style={{fontFamily:'Playfair Display,serif',fontSize:28}}>Leave Calendar</div>
+        <input type="month" className="mini-input" value={calendarMonth} onChange={e=>setCalendarMonth(e.target.value)} />
+      </div>
+      <div className="calendar-grid">
+        {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=><div key={d} className="cal-head">{d}</div>)}
+        {calendarDays.map((day,idx)=>{
+          if(!day) return <div key={`blank-${idx}`} className="cal-cell"></div>;
+          const dayRows=byDateMap.get(day)||[];
+          return <div key={day} className="cal-cell"><div className="cal-day">{new Date(`${day}T00:00:00`).getDate()}</div>{dayRows.slice(0,3).map(r=><span key={`${day}-${r.id}`} className="cal-chip" title={`${r.staff_name} - ${r.leave_type}`}>{r.staff_name} · {r.leave_type}</span>)}{dayRows.length>3&&<span className="cal-chip">+{dayRows.length-3} more</span>}</div>;
+        })}
+      </div>
+    </div>
+  </div>;
+}
+
 function Placeholder({title}){return <><div className="page-head"><div><h1>{title}</h1><p>This module is connected and ready for live Supabase data.</p></div></div></>;}
 
 function App(){
@@ -379,6 +979,755 @@ function App(){
   const [leaves,setLeaves]=useState([]);
   const [summary,setSummary]=useState([]);
   const [auditLog,setAuditLog]=useState([]);
+
+  const [toasts,setToasts]=useState([]);
+  const [dataLoading,setDataLoading]=useState(false);
+  const [staffModalOpen,setStaffModalOpen]=useState(false);
+  const [staffModalMode,setStaffModalMode]=useState('add');
+  const [staffForm,setStaffForm]=useState(makeEmptyStaffForm());
+  const [staffInitialForm,setStaffInitialForm]=useState(makeEmptyStaffForm());
+  const [staffFormErrors,setStaffFormErrors]=useState({});
+  const [staffTouched,setStaffTouched]=useState({});
+  const [staffSubmitting,setStaffSubmitting]=useState(false);
+  const [deleteTarget,setDeleteTarget]=useState(null);
+  const [deleteLoading,setDeleteLoading]=useState(false);
+  const [lastDeletedStaff,setLastDeletedStaff]=useState(null);
+  const [manualEntryOpen,setManualEntryOpen]=useState(false);
+  const [manualDate,setManualDate]=useState(todayDateKey());
+  const [manualRows,setManualRows]=useState({});
+  const [manualSaving,setManualSaving]=useState(false);
+  const [manualProgressText,setManualProgressText]=useState('');
+  const [attendanceFrom,setAttendanceFrom]=useState(()=>new Date(Date.now()-6*86400000).toISOString().slice(0,10));
+  const [attendanceTo,setAttendanceTo]=useState(todayDateKey());
+  const [leaveFilter,setLeaveFilter]=useState('all');
+  const [leaveModalOpen,setLeaveModalOpen]=useState(false);
+  const [leaveSubmitting,setLeaveSubmitting]=useState(false);
+  const [leaveForm,setLeaveForm]=useState({staff_id:'',leave_type:LEAVE_TYPES[0],start_date:todayDateKey(),end_date:todayDateKey(),reason:''});
+  const [leaveFormErrors,setLeaveFormErrors]=useState({});
+  const [leaveTouched,setLeaveTouched]=useState({});
+  const [leaveDecisionOpen,setLeaveDecisionOpen]=useState(false);
+  const [leaveDecisionMode,setLeaveDecisionMode]=useState('approve');
+  const [leaveDecisionRow,setLeaveDecisionRow]=useState(null);
+  const [leaveDecisionComment,setLeaveDecisionComment]=useState('');
+  const [leaveDecisionSaving,setLeaveDecisionSaving]=useState(false);
+
+  const dismissToast=(id)=>setToasts(prev=>prev.filter(t=>t.id!==id));
+  const pushToast=(type,message,extra={})=>{
+    const id=`${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    setToasts(prev=>[...prev,{id,type,message,...extra}]);
+    setTimeout(()=>dismissToast(id),5000);
+  };
+
+  const nextEmployeeId=useMemo(()=>{
+    const maxNum=(staff||[]).reduce((mx,s)=>{
+      const m=String(s.employee_id||'').match(/UES-(\d{3,})/i);
+      const n=m?parseInt(m[1],10):0;
+      return n>mx?n:mx;
+    },0);
+    return `UES-${String(maxNum+1).padStart(3,'0')}`;
+  },[staff]);
+
+  const validateStaffField=(key,val,form)=>{
+    const value=String(val??'').trim();
+    if(key==='full_name' && !value) return 'Full name is required';
+    if(key==='email'){
+      if(!value) return 'Email is required';
+      if(!emailRe.test(value)) return 'Enter a valid email address';
+    }
+    if(key==='department' && !value) return 'Department is required';
+    if(key==='phone'){
+      if(!value) return 'Phone number is required';
+      if(!pakPhoneRe.test(normalizePkPhone(value))) return 'Use Pakistan format: 03XX-XXXXXXX or +92XXXXXXXXXX';
+    }
+    if(key==='employee_id'){
+      if(!value) return 'Employee ID is required';
+      if(!/^UES-\d{3}$/.test(value.toUpperCase())) return 'Employee ID format must be UES-001';
+    }
+    if(key==='join_date' && value && value>todayDateKey()) return 'Join date cannot be in the future';
+    return '';
+  };
+
+  const validateStaffForm=(form)=>{
+    const checks=['full_name','email','department','phone','employee_id','join_date'];
+    const errs={};
+    checks.forEach((k)=>{
+      const msg=validateStaffField(k,form?.[k],form);
+      if(msg) errs[k]=msg;
+    });
+    return errs;
+  };
+
+  const trimPayload=(obj)=>Object.fromEntries(Object.entries(obj).filter(([_,v])=>v!==undefined));
+
+  const runMutationWithColumnFallback=async(executor,payload)=>{
+    const working={...payload};
+    const removed=[];
+    for(let i=0;i<Object.keys(payload).length+1;i++){
+      const res=await executor(working);
+      if(!res.error) return {...res,usedPayload:working,removedColumns:removed};
+      const msg=`${res.error?.message||''} ${res.error?.details||''}`;
+      const colMatch=msg.match(/column\s+"?([a-zA-Z0-9_]+)"?\s+does not exist/i);
+      const col=colMatch?.[1];
+      if(col && Object.prototype.hasOwnProperty.call(working,col)){
+        delete working[col];
+        removed.push(col);
+        continue;
+      }
+      return {...res,usedPayload:working,removedColumns:removed};
+    }
+    return {data:null,error:new Error('Mutation failed after fallback attempts'),usedPayload:working,removedColumns:removed};
+  };
+
+  const upsertUsersRecord=async(form,existingUserId='')=>{
+    const usersPayload=trimPayload({
+      full_name:String(form.full_name||'').trim(),
+      email:String(form.email||'').trim().toLowerCase(),
+      role:'staff',
+      status:form.status,
+      is_active:String(form.status||'active').toLowerCase()==='active'
+    });
+
+    if(existingUserId){
+      await runMutationWithColumnFallback(
+        (p)=>supabase.from('users').update(p).eq('id',existingUserId).select('id').maybeSingle(),
+        usersPayload
+      );
+      return existingUserId;
+    }
+
+    const existing=await supabase.from('users').select('id').eq('email',usersPayload.email).maybeSingle();
+    if(existing?.data?.id){
+      await runMutationWithColumnFallback(
+        (p)=>supabase.from('users').update(p).eq('id',existing.data.id).select('id').maybeSingle(),
+        usersPayload
+      );
+      return existing.data.id;
+    }
+
+    const inserted=await runMutationWithColumnFallback(
+      (p)=>supabase.from('users').insert(p).select('id').single(),
+      usersPayload
+    );
+    if(inserted.error) throw inserted.error;
+    return inserted.data?.id || '';
+  };
+
+  const openAddStaff=()=>{
+    const nextForm=makeEmptyStaffForm(nextEmployeeId);
+    setStaffModalMode('add');
+    setStaffForm(nextForm);
+    setStaffInitialForm(nextForm);
+    setStaffFormErrors({});
+    setStaffTouched({});
+    setStaffModalOpen(true);
+  };
+
+  const openEditStaff=(row)=>{
+    const editForm={
+      id:row.id||'',
+      user_id:row.user_id||'',
+      full_name:row.full_name||row.name||'',
+      email:row.email||'',
+      department:row.department||'Administration',
+      designation:row.designation||'',
+      phone:row.phone||'',
+      employee_id:row.employee_id||'',
+      join_date:row.join_date?String(row.join_date).slice(0,10):new Date().toISOString().slice(0,10),
+      status:row.status||'Active'
+    };
+    setStaffModalMode('edit');
+    setStaffForm(editForm);
+    setStaffInitialForm(editForm);
+    setStaffFormErrors({});
+    setStaffTouched({});
+    setStaffModalOpen(true);
+  };
+
+  const normalizeStaffForDirtyCheck=(f)=>({
+    full_name:String(f?.full_name||'').trim(),
+    email:String(f?.email||'').trim().toLowerCase(),
+    department:f?.department||'',
+    designation:f?.designation||'',
+    phone:f?.phone||'',
+    employee_id:String(f?.employee_id||'').trim().toUpperCase(),
+    join_date:f?.join_date||'',
+    status:f?.status||'Active'
+  });
+
+  const isStaffFormDirty=useMemo(()=>{
+    return JSON.stringify(normalizeStaffForDirtyCheck(staffForm))!==JSON.stringify(normalizeStaffForDirtyCheck(staffInitialForm));
+  },[staffForm,staffInitialForm]);
+
+  const closeStaffModal=(source='manual')=>{
+    if(staffSubmitting) return;
+    if(isStaffFormDirty && !window.confirm('Discard unsaved staff form changes?')) return;
+    setStaffModalOpen(false);
+  };
+
+  const handleStaffFormChange=(key,val)=>{
+    const normalized=key==='phone'?normalizePkPhone(val):val;
+    setStaffForm(prev=>({...prev,[key]:normalized}));
+    if(staffTouched[key]){
+      const msg=validateStaffField(key,normalized,{...staffForm,[key]:normalized});
+      setStaffFormErrors(prev=>({...prev,[key]:msg}));
+    }
+  };
+
+  const onStaffFieldBlur=(key)=>{
+    setStaffTouched(prev=>({...prev,[key]:true}));
+    const msg=validateStaffField(key,staffForm?.[key],staffForm);
+    setStaffFormErrors(prev=>({...prev,[key]:msg}));
+  };
+
+  const isStaffFormValid=useMemo(()=>Object.keys(validateStaffForm(staffForm)).length===0,[staffForm]);
+
+  const saveStaff=async()=>{
+    if(staffSubmitting || !supabase || !user) return;
+    const errs=validateStaffForm(staffForm);
+    setStaffFormErrors(errs);
+    setStaffTouched({full_name:true,email:true,department:true,phone:true,employee_id:true,join_date:true});
+    if(Object.keys(errs).length){
+      pushToast('warning','Please correct the highlighted fields.');
+      return;
+    }
+
+    const emailNorm=String(staffForm.email||'').trim().toLowerCase();
+    const empNorm=String(staffForm.employee_id||'').trim().toUpperCase();
+    const duplicateEmail=(staff||[]).find(s=>String(s.email||'').toLowerCase()===emailNorm && s.id!==staffForm.id);
+    if(duplicateEmail){
+      setStaffFormErrors(prev=>({...prev,email:'This email is already registered'}));
+      pushToast('error','This email is already registered');
+      return;
+    }
+    const duplicateEmp=(staff||[]).find(s=>String(s.employee_id||'').toUpperCase()===empNorm && s.id!==staffForm.id);
+    if(duplicateEmp){
+      setStaffFormErrors(prev=>({...prev,employee_id:'Employee ID already exists'}));
+      pushToast('error','Employee ID already exists');
+      return;
+    }
+
+    setStaffSubmitting(true);
+    try{
+      const normalized={...staffForm,email:String(staffForm.email||'').trim().toLowerCase(),full_name:String(staffForm.full_name||'').trim(),employee_id:String(staffForm.employee_id||'').trim().toUpperCase()||nextEmployeeId,phone:normalizePkPhone(staffForm.phone)};
+      const optimisticRecord={...normalized,id:normalized.id||`tmp-${Date.now()}`};
+      if(staffModalMode==='edit' && normalized.id){
+        setStaff(prev=>prev.map(s=>s.id===normalized.id?{...s,...optimisticRecord}:s));
+      }else{
+        setStaff(prev=>[optimisticRecord,...prev]);
+      }
+
+      const userId=await upsertUsersRecord(normalized,staffModalMode==='edit'?normalized.user_id:'');
+
+      const staffPayload=trimPayload({
+        user_id:userId || normalized.user_id || undefined,
+        full_name:normalized.full_name,
+        email:normalized.email,
+        department:normalized.department,
+        designation:normalized.designation,
+        phone:normalized.phone,
+        employee_id:normalized.employee_id,
+        join_date:normalized.join_date || undefined,
+        status:normalized.status || 'Active'
+      });
+
+      if(staffModalMode==='edit' && normalized.id){
+        const updated=await runMutationWithColumnFallback((p)=>supabase.from('staff').update(p).eq('id',normalized.id).select('id').single(),staffPayload);
+        if(updated.error) throw updated.error;
+        pushToast('success','Staff record updated successfully.');
+      }else{
+        const inserted=await runMutationWithColumnFallback((p)=>supabase.from('staff').insert(p).select('id').single(),staffPayload);
+        if(inserted.error) throw inserted.error;
+        pushToast('success','Staff added successfully.');
+      }
+
+      setStaffModalOpen(false);
+      await loadData(user);
+    }catch(err){
+      console.error('[StaffCRUD] Save staff failed:',err);
+      pushToast('error',mapFriendlyError(err));
+      await loadData(user);
+    }finally{
+      setStaffSubmitting(false);
+    }
+  };
+
+  const requestDeleteStaff=(row)=>setDeleteTarget(row);
+
+  const markUserInactiveBestEffort=async(row)=>{
+    try{
+      if(row?.user_id){
+        await runMutationWithColumnFallback((p)=>supabase.from('users').update(p).eq('id',row.user_id).select('id').maybeSingle(),{status:'Inactive',is_active:false});
+        return;
+      }
+      if(row?.email){
+        await runMutationWithColumnFallback((p)=>supabase.from('users').update(p).eq('email',row.email).select('id').maybeSingle(),{status:'Inactive',is_active:false});
+      }
+    }catch(ex){
+      console.warn('[StaffCRUD] Mark inactive skipped:',ex);
+    }
+  };
+
+  const undoDeleteStaff=async()=>{
+    if(!lastDeletedStaff || !supabase || !user) return;
+    try{
+      const res=await runMutationWithColumnFallback((p)=>supabase.from('staff').insert(p).select('id').single(),trimPayload(lastDeletedStaff));
+      if(res.error) throw res.error;
+      setLastDeletedStaff(null);
+      pushToast('success','Deleted staff restored.');
+      await loadData(user);
+    }catch(err){
+      console.error('[StaffCRUD] Undo delete failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }
+  };
+
+  const confirmDeleteStaff=async()=>{
+    if(!deleteTarget || deleteLoading || !supabase || !user) return;
+    setDeleteLoading(true);
+    const backup={...deleteTarget};
+    setStaff(prev=>prev.filter(s=>s.id!==deleteTarget.id));
+    try{
+      const del=await supabase.from('staff').delete().eq('id',deleteTarget.id);
+      if(del.error) throw del.error;
+      await markUserInactiveBestEffort(deleteTarget);
+      setDeleteTarget(null);
+      setLastDeletedStaff(backup);
+      pushToast('success','Staff deleted successfully.',{onUndo:undoDeleteStaff});
+      await loadData(user);
+    }catch(err){
+      console.error('[StaffCRUD] Delete failed:',err);
+      setStaff(prev=>[backup,...prev]);
+      pushToast('error',mapFriendlyError(err));
+    }finally{
+      setDeleteLoading(false);
+    }
+  };
+
+  const staffMap=useMemo(()=>new Map((staff||[]).map(s=>[s.id,s])),[staff]);
+  const currentUserStaff=useMemo(()=>{
+    if(!user) return null;
+    return (staff||[]).find(s=>s.user_id===user.id || (s.email && user.email && String(s.email).toLowerCase()===String(user.email).toLowerCase())) || null;
+  },[staff,user]);
+
+  const leaveRows=useMemo(()=>{
+    const usersById=new Map();
+    (staff||[]).forEach(s=>{ if(s.user_id) usersById.set(s.user_id,s); });
+    return (leaves||[]).map(l=>{
+      const st=staffMap.get(l.staff_id) || usersById.get(l.user_id) || null;
+      const approvedByStaff=staffMap.get(l.approved_by) || usersById.get(l.approved_by) || null;
+      return {
+        ...l,
+        staff_name:st?.full_name || l.staff_name || l.full_name || l.employee_name || (user?.id===l.user_id?user.name:'Unknown Staff'),
+        employee_id:st?.employee_id || l.employee_id || '—',
+        start_date:toDateInput(l.start_date||l.from_date||l.date||''),
+        end_date:toDateInput(l.end_date||l.to_date||l.date||''),
+        applied_date:l.applied_date || l.created_at,
+        processed_by_name:approvedByStaff?.full_name || l.approved_by_name || '',
+        admin_comment:l.admin_comment || l.comment || '',
+        rejection_reason:l.rejection_reason || ''
+      };
+    });
+  },[leaves,staffMap,staff,user]);
+
+  const pendingLeaveCount=useMemo(()=>leaveRows.filter(l=>normalizeStatus(l.status)==='pending').length,[leaveRows]);
+  const onLeaveTodayRows=useMemo(()=>{
+    const today=todayDateKey();
+    return leaveRows
+      .filter(l=>normalizeStatus(l.status)==='approved' && l.start_date<=today && l.end_date>=today)
+      .map(l=>({id:l.id,staff_name:l.staff_name,employee_id:l.employee_id,leave_type:l.leave_type}));
+  },[leaveRows]);
+  const upcomingLeaves=useMemo(()=>{
+    const today=todayDateKey();
+    return leaveRows
+      .filter(l=>normalizeStatus(l.status)==='approved' && l.start_date>today)
+      .sort((a,b)=>new Date(a.start_date)-new Date(b.start_date))
+      .slice(0,8)
+      .map(l=>({...l,days:dayDiffInclusive(l.start_date,l.end_date)}));
+  },[leaveRows]);
+
+  const openManualEntry=()=>{
+    if(user?.role!=='admin'){
+      pushToast('warning','Only admin can use manual attendance entry.');
+      return;
+    }
+    setManualDate(todayDateKey());
+    setManualEntryOpen(true);
+    setPage('attendance');
+  };
+
+  useEffect(()=>{
+    if(!manualEntryOpen) return;
+    const approvedLeaves=(leaves||[]).filter(l=>String(l.status||'').toLowerCase()==='approved');
+    const rowsByStaff={};
+
+    (staff||[]).forEach(member=>{
+      const existing=(attendance||[]).find(a=>a.staff_id===member.id && toDateInput(a.date||a.created_at||'')===manualDate);
+      const leaveHit=approvedLeaves.find(l=>{
+        const leaveStart=toDateInput(l.start_date||l.from_date||l.date||'');
+        const leaveEnd=toDateInput(l.end_date||l.to_date||l.date||'');
+        const samePerson=(l.staff_id && l.staff_id===member.id) || (l.user_id && (l.user_id===member.user_id || l.user_id===member.id));
+        if(!samePerson || !leaveStart || !leaveEnd) return false;
+        return leaveStart<=manualDate && leaveEnd>=manualDate;
+      });
+
+      const status=existing?.status || (leaveHit?'On Leave':'');
+      const existingMethod=(existing?.verification_method || existing?.method || '').toLowerCase();
+      const defaultLateTime=toTimeInput(new Date());
+      const checkIn=existing?.check_in
+        ? toTimeInput(existing.check_in)
+        : (normalizeStatus(status)==='present'?'08:00':normalizeStatus(status)==='late'?defaultLateTime:'');
+      const checkOut=existing?.check_out?toTimeInput(existing.check_out):'';
+
+      rowsByStaff[member.id]={
+        staff_id:member.id,
+        full_name:member.full_name||member.name||'Unnamed Staff',
+        employee_id:member.employee_id||'',
+        department:member.department||'—',
+        status,
+        check_in:checkIn,
+        check_out:checkOut,
+        existing_id:existing?.id||'',
+        existing_method:existing?.verification_method||existing?.method||'',
+        overwrite_device:!!existing?.id && existingMethod && existingMethod!=='manual',
+        auto_leave:!!leaveHit,
+        user_id:member.user_id||''
+      };
+    });
+
+    setManualRows(rowsByStaff);
+  },[manualEntryOpen,manualDate,staff,attendance,leaves]);
+
+  const manualRowsList=useMemo(()=>Object.values(manualRows).sort((a,b)=>String(a.full_name).localeCompare(String(b.full_name))),[manualRows]);
+  const markedCount=useMemo(()=>manualRowsList.filter(r=>!!normalizeStatus(r.status)).length,[manualRowsList]);
+
+  const updateManualRow=(staffId,patch)=>setManualRows(prev=>({
+    ...prev,
+    [staffId]:{...prev[staffId],...patch}
+  }));
+
+  const onManualStatusChange=(staffId,status)=>{
+    const norm=normalizeStatus(status);
+    const current=manualRows[staffId]||{};
+    const next={status};
+    if(norm==='present'){
+      next.check_in=current.check_in || '08:00';
+      next.check_out='';
+    }
+    if(norm==='late'){
+      next.check_in=current.check_in || toTimeInput(new Date());
+    }
+    if(norm==='absent' || norm==='on_leave'){
+      next.check_in='';
+      next.check_out='';
+    }
+    updateManualRow(staffId,next);
+  };
+
+  const onManualTimeChange=(staffId,key,val)=>updateManualRow(staffId,{[key]:val});
+
+  const onMarkAllPresent=()=>{
+    setManualRows(prev=>Object.fromEntries(Object.entries(prev).map(([id,row])=>[id,{...row,status:'Present',check_in:'08:00',check_out:''}] )));
+  };
+
+  const onMarkAllAbsent=()=>{
+    setManualRows(prev=>Object.fromEntries(Object.entries(prev).map(([id,row])=>[id,{...row,status:'Absent',check_in:'',check_out:''}] )));
+  };
+
+  const onClearAllManual=()=>{
+    if(!manualEntryOpen) return;
+    const approvedLeaves=(leaves||[]).filter(l=>String(l.status||'').toLowerCase()==='approved');
+    setManualRows(prev=>Object.fromEntries(Object.entries(prev).map(([id,row])=>{
+      const leaveHit=approvedLeaves.find(l=>{
+        const leaveStart=toDateInput(l.start_date||l.from_date||l.date||'');
+        const leaveEnd=toDateInput(l.end_date||l.to_date||l.date||'');
+        const samePerson=(l.staff_id && l.staff_id===row.staff_id) || (l.user_id && (l.user_id===row.user_id || l.user_id===row.staff_id));
+        return samePerson && leaveStart && leaveEnd && leaveStart<=manualDate && leaveEnd>=manualDate;
+      });
+      return [id,{...row,status:leaveHit?'On Leave':'',check_in:'',check_out:'',auto_leave:!!leaveHit}];
+    })));
+  };
+
+  const saveManualAttendance=async()=>{
+    if(manualSaving || !supabase || !user) return;
+    if(isFutureDate(manualDate)){
+      pushToast('warning','Date cannot be in the future.');
+      return;
+    }
+
+    const marked=manualRowsList.filter(r=>!!normalizeStatus(r.status));
+    if(marked.length===0){
+      pushToast('warning','Mark attendance for at least one staff member.');
+      return;
+    }
+
+    for(const row of marked){
+      const norm=normalizeStatus(row.status);
+      if((norm==='present' || norm==='late') && !row.check_in){
+        pushToast('warning',`Check-in time is required for ${row.full_name}.`);
+        return;
+      }
+      if(row.check_in && row.check_out && row.check_in>=row.check_out){
+        pushToast('warning',`Check-in must be before check-out for ${row.full_name}.`);
+        return;
+      }
+    }
+
+    setManualSaving(true);
+    setManualProgressText('Preparing batch...');
+
+    try{
+      const staffIds=marked.map(r=>r.staff_id).filter(Boolean);
+      const existingRes=await supabase.from('attendance').select('id,staff_id,date,verification_method').eq('date',manualDate).in('staff_id',staffIds);
+      if(existingRes.error) throw existingRes.error;
+      const existingMap=new Map((existingRes.data||[]).map(r=>[r.staff_id,r]));
+
+      const overwriteCount=(existingRes.data||[]).filter(r=>String(r.verification_method||'').toLowerCase() && String(r.verification_method||'').toLowerCase()!=='manual').length;
+      if(overwriteCount>0) pushToast('warning',`Warning: ${overwriteCount} fingerprint record(s) will be overwritten with manual attendance.`);
+
+      let saved=0;
+      for(let i=0;i<marked.length;i++){
+        const row=marked[i];
+        setManualProgressText(`Saving ${i+1}/${marked.length}: ${row.full_name}`);
+        const norm=normalizeStatus(row.status);
+        const payload={
+          staff_id:row.staff_id,
+          date:manualDate,
+          status:norm==='on_leave'?'On Leave':(norm==='present'?'Present':norm==='absent'?'Absent':'Late'),
+          check_in:(norm==='present' || norm==='late')?combineDateAndTime(manualDate,row.check_in):null,
+          check_out:(norm==='present' || norm==='late') && row.check_out?combineDateAndTime(manualDate,row.check_out):null,
+          verification_method:'Manual'
+        };
+
+        const existing=existingMap.get(row.staff_id);
+        let result;
+        if(existing?.id){
+          result=await runMutationWithColumnFallback((p)=>supabase.from('attendance').update(p).eq('id',existing.id).select('id').single(),payload);
+        }else{
+          result=await runMutationWithColumnFallback((p)=>supabase.from('attendance').insert(p).select('id').single(),payload);
+        }
+        if(result.error) throw result.error;
+        saved+=1;
+      }
+
+      setManualProgressText('Refreshing records...');
+      await loadData(user);
+      pushToast('success',`Attendance saved for ${saved} staff.`);
+      setManualEntryOpen(false);
+    }catch(err){
+      console.error('[ManualAttendance] Save failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }finally{
+      setManualSaving(false);
+      setManualProgressText('');
+    }
+  };
+
+  const openLeaveApply=()=>{
+    const today=todayDateKey();
+    setLeaveForm({staff_id:currentUserStaff?.id||'',leave_type:LEAVE_TYPES[0],start_date:today,end_date:today,reason:''});
+    setLeaveFormErrors({});
+    setLeaveTouched({});
+    setLeaveModalOpen(true);
+  };
+
+  const validateLeaveField=(key,val,form)=>{
+    const value=String(val??'').trim();
+    if(key==='staff_id' && user?.role==='admin' && !value) return 'Staff member is required';
+    if(key==='leave_type' && !value) return 'Leave type is required';
+    if(key==='start_date'){
+      if(!value) return 'Start date is required';
+      if(value<todayDateKey()) return 'Only future dates are allowed for leave';
+    }
+    if(key==='end_date'){
+      if(!value) return 'End date is required';
+      if(form?.start_date && value<form.start_date) return 'End date must be after start date';
+      if(form?.start_date && dayDiffInclusive(form.start_date,value)>30) return 'Leave duration cannot exceed 30 days';
+    }
+    if(key==='reason' && !value) return 'Reason is required';
+    return '';
+  };
+
+  const validateLeaveForm=(form)=>{
+    const checks=['staff_id','leave_type','start_date','end_date','reason'];
+    const errs={};
+    checks.forEach((k)=>{
+      const msg=validateLeaveField(k,form?.[k],form);
+      if(msg) errs[k]=msg;
+    });
+    return errs;
+  };
+
+  const onLeaveFieldChange=(key,val)=>{
+    const next={...leaveForm,[key]:val};
+    setLeaveForm(next);
+    if(leaveTouched[key]){
+      setLeaveFormErrors(prev=>({...prev,[key]:validateLeaveField(key,val,next)}));
+    }
+    if((key==='start_date' || key==='end_date') && leaveTouched.end_date){
+      setLeaveFormErrors(prev=>({...prev,end_date:validateLeaveField('end_date',next.end_date,next)}));
+    }
+  };
+
+  const onLeaveFieldBlur=(key)=>{
+    setLeaveTouched(prev=>({...prev,[key]:true}));
+    setLeaveFormErrors(prev=>({...prev,[key]:validateLeaveField(key,leaveForm?.[key],leaveForm)}));
+  };
+
+  const leaveFormInitial=useMemo(()=>({staff_id:currentUserStaff?.id||'',leave_type:LEAVE_TYPES[0],start_date:todayDateKey(),end_date:todayDateKey(),reason:''}),[currentUserStaff]);
+  const isLeaveFormDirty=useMemo(()=>JSON.stringify({...leaveForm,reason:String(leaveForm.reason||'').trim()})!==JSON.stringify({...leaveFormInitial,reason:String(leaveFormInitial.reason||'').trim()}),[leaveForm,leaveFormInitial]);
+  const closeLeaveModal=(source='manual')=>{
+    if(leaveSubmitting) return;
+    if(isLeaveFormDirty && !window.confirm('Discard unsaved leave request changes?')) return;
+    setLeaveModalOpen(false);
+  };
+
+  const isLeaveFormValid=useMemo(()=>Object.keys(validateLeaveForm(leaveForm)).length===0,[leaveForm,user]);
+
+  const hasOverlappingLeave=(staffId,startDate,endDate)=>{
+    return leaveRows.some(l=>{
+      if(l.staff_id!==staffId) return false;
+      const norm=normalizeStatus(l.status);
+      if(norm==='rejected' || norm==='cancelled') return false;
+      return l.start_date<=endDate && l.end_date>=startDate;
+    });
+  };
+
+  const submitLeaveRequest=async()=>{
+    if(!supabase || !user || leaveSubmitting) return;
+    const errs=validateLeaveForm(leaveForm);
+    setLeaveFormErrors(errs);
+    setLeaveTouched({staff_id:true,leave_type:true,start_date:true,end_date:true,reason:true});
+    if(Object.keys(errs).length){
+      pushToast('warning','Please correct leave form errors.');
+      return;
+    }
+    const staffId=(user.role==='admin'?leaveForm.staff_id:currentUserStaff?.id) || currentUserStaff?.id;
+    const targetStaff=staffMap.get(staffId) || null;
+    if(!staffId){
+      pushToast('error','No linked staff profile found for this account. Contact admin.');
+      return;
+    }
+    if(hasOverlappingLeave(staffId,leaveForm.start_date,leaveForm.end_date)){
+      pushToast('warning','Leave dates overlap with an existing request.');
+      return;
+    }
+
+    setLeaveSubmitting(true);
+    try{
+      const payload={
+        staff_id:staffId,
+        user_id:targetStaff?.user_id || user.id,
+        leave_type:leaveForm.leave_type,
+        start_date:leaveForm.start_date,
+        end_date:leaveForm.end_date,
+        reason:String(leaveForm.reason||'').trim(),
+        status:'Pending',
+        applied_date:toIsoNow(),
+        created_at:toIsoNow()
+      };
+      setLeaves(prev=>[{...payload,id:`tmp-leave-${Date.now()}`},...prev]);
+      const res=await runMutationWithColumnFallback((p)=>supabase.from('leaves').insert(p).select('id').single(),payload);
+      if(res.error) throw res.error;
+      setLeaveModalOpen(false);
+      pushToast('success','Leave request submitted successfully.');
+      await loadData(user);
+    }catch(err){
+      console.error('[Leave] Submit failed:',err);
+      pushToast('error',mapFriendlyError(err));
+      await loadData(user);
+    }finally{
+      setLeaveSubmitting(false);
+    }
+  };
+
+  const applyLeaveAttendanceForApproval=async(leaveRow)=>{
+    const days=eachDateInRange(leaveRow.start_date,leaveRow.end_date);
+    if(!days.length || !leaveRow.staff_id) return;
+    const existing=await supabase.from('attendance').select('id,date,status').eq('staff_id',leaveRow.staff_id).gte('date',days[0]).lte('date',days[days.length-1]);
+    if(existing.error) throw existing.error;
+    const existingByDate=new Map((existing.data||[]).map(r=>[toDateInput(r.date),r]));
+
+    for(const dateKey of days){
+      const found=existingByDate.get(dateKey);
+      if(found && normalizeStatus(found.status)==='present') continue;
+      const payload={
+        staff_id:leaveRow.staff_id,
+        date:dateKey,
+        status:'On Leave',
+        verification_method:'Leave Approved',
+        check_in:null,
+        check_out:null
+      };
+      if(found?.id){
+        const upd=await runMutationWithColumnFallback((p)=>supabase.from('attendance').update(p).eq('id',found.id).select('id').single(),payload);
+        if(upd.error) throw upd.error;
+      }else{
+        const ins=await runMutationWithColumnFallback((p)=>supabase.from('attendance').insert(p).select('id').single(),payload);
+        if(ins.error) throw ins.error;
+      }
+    }
+  };
+
+  const openApproveLeave=(row)=>{
+    setLeaveDecisionMode('approve');
+    setLeaveDecisionRow(row);
+    setLeaveDecisionComment('');
+    setLeaveDecisionOpen(true);
+  };
+
+  const openRejectLeave=(row)=>{
+    setLeaveDecisionMode('reject');
+    setLeaveDecisionRow(row);
+    setLeaveDecisionComment('');
+    setLeaveDecisionOpen(true);
+  };
+
+  const processLeaveDecision=async()=>{
+    if(!leaveDecisionRow || !user || leaveDecisionSaving) return;
+    const isReject=leaveDecisionMode==='reject';
+    if(isReject && !String(leaveDecisionComment||'').trim()){
+      pushToast('warning','Rejection reason is required.');
+      return;
+    }
+
+    setLeaveDecisionSaving(true);
+    try{
+      const payload={
+        status:isReject?'Rejected':'Approved',
+        approved_by:user.id,
+        approved_date:toIsoNow(),
+        admin_comment:!isReject?String(leaveDecisionComment||'').trim():undefined,
+        rejection_reason:isReject?String(leaveDecisionComment||'').trim():undefined
+      };
+      const res=await runMutationWithColumnFallback((p)=>supabase.from('leaves').update(p).eq('id',leaveDecisionRow.id).select('id').single(),payload);
+      if(res.error) throw res.error;
+      if(!isReject) await applyLeaveAttendanceForApproval(leaveDecisionRow);
+      pushToast('success',isReject?`Leave rejected for ${leaveDecisionRow.staff_name}`:`Leave approved for ${leaveDecisionRow.staff_name}`);
+      setLeaveDecisionOpen(false);
+      setLeaveDecisionRow(null);
+      setLeaveDecisionComment('');
+      await loadData(user);
+    }catch(err){
+      console.error('[Leave] Decision failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }finally{
+      setLeaveDecisionSaving(false);
+    }
+  };
+
+  const cancelOwnLeave=async(row)=>{
+    if(!row || !user) return;
+    if(!window.confirm('Cancel this pending leave request?')) return;
+    try{
+      const res=await runMutationWithColumnFallback((p)=>supabase.from('leaves').update(p).eq('id',row.id).select('id').single(),{status:'Cancelled',cancelled_date:toIsoNow()});
+      if(res.error) throw res.error;
+      pushToast('success','Leave request cancelled.');
+      await loadData(user);
+    }catch(err){
+      console.error('[Leave] Cancel failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }
+  };
 
   const resolveUserProfile=async(authUser,forcedRole,profileName,{requireDbProfile=false,context='general'}={})=>{
     if(!supabase) throw new Error('Supabase client is not initialized');
@@ -424,39 +1773,56 @@ function App(){
 
   const loadData=async(profile)=>{
     if(!supabase) return;
-    const isAdmin=profile.role==='admin';
+    setDataLoading(true);
+    try{
+      const isAdmin=profile.role==='admin';
 
-    let staffRows=[];
-    if(isAdmin){
-      const s=await supabase.from('staff').select('*').order('created_at',{ascending:false});
-      if(!s.error) staffRows=s.data||[];
-    }else{
-      const s=await supabase.from('staff').select('*').or(`user_id.eq.${profile.id},email.eq.${profile.email}`);
-      if(!s.error) staffRows=s.data||[];
+      let staffRows=[];
+      if(isAdmin){
+        const s=await supabase.from('staff').select('*').order('created_at',{ascending:false});
+        if(s.error) throw s.error;
+        staffRows=s.data||[];
+      }else{
+        const s=await supabase.from('staff').select('*').or(`user_id.eq.${profile.id},email.eq.${profile.email}`);
+        if(s.error) throw s.error;
+        staffRows=s.data||[];
+      }
+      setStaff(staffRows);
+
+      const staffIds=staffRows.map(x=>x.id).filter(Boolean);
+
+      const [att,lev,sum,aud]=await Promise.all([
+        isAdmin
+          ? supabase.from('attendance').select('*').order('date',{ascending:false}).limit(1000)
+          : (staffIds.length?supabase.from('attendance').select('*').in('staff_id',staffIds).order('date',{ascending:false}).limit(1000):Promise.resolve({data:[],error:null})),
+        isAdmin
+          ? supabase.from('leaves').select('*').order('created_at',{ascending:false}).limit(400)
+          : (staffIds.length
+            ? supabase.from('leaves').select('*').or(`user_id.eq.${profile.id},staff_id.in.(${staffIds.join(',')})`).order('created_at',{ascending:false}).limit(400)
+            : supabase.from('leaves').select('*').eq('user_id',profile.id).order('created_at',{ascending:false}).limit(400)),
+        isAdmin
+          ? supabase.from('attendance_summary').select('*').order('date',{ascending:false}).limit(400)
+          : (staffIds.length?supabase.from('attendance_summary').select('*').in('staff_id',staffIds).order('date',{ascending:false}).limit(400):Promise.resolve({data:[],error:null})),
+        isAdmin
+          ? supabase.from('audit_log').select('*').order('created_at',{ascending:false}).limit(50)
+          : supabase.from('audit_log').select('*').eq('user_id',profile.id).order('created_at',{ascending:false}).limit(50)
+      ]);
+
+      if(att.error) throw att.error;
+      if(lev.error) throw lev.error;
+      if(sum.error) throw sum.error;
+      if(aud.error) throw aud.error;
+
+      setAttendance(att.data||[]);
+      setLeaves(lev.data||[]);
+      setSummary(sum.data||[]);
+      setAuditLog(aud.data||[]);
+    }catch(err){
+      console.error('[DataLoad] Failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }finally{
+      setDataLoading(false);
     }
-    setStaff(staffRows);
-
-    const staffIds=staffRows.map(x=>x.id).filter(Boolean);
-
-    const [att,lev,sum,aud]=await Promise.all([
-      isAdmin
-        ? supabase.from('attendance').select('*').order('date',{ascending:false}).limit(1000)
-        : (staffIds.length?supabase.from('attendance').select('*').in('staff_id',staffIds).order('date',{ascending:false}).limit(1000):Promise.resolve({data:[],error:null})),
-      isAdmin
-        ? supabase.from('leaves').select('*').order('created_at',{ascending:false}).limit(400)
-        : supabase.from('leaves').select('*').eq('user_id',profile.id).order('created_at',{ascending:false}).limit(400),
-      isAdmin
-        ? supabase.from('attendance_summary').select('*').order('date',{ascending:false}).limit(400)
-        : (staffIds.length?supabase.from('attendance_summary').select('*').in('staff_id',staffIds).order('date',{ascending:false}).limit(400):Promise.resolve({data:[],error:null})),
-      isAdmin
-        ? supabase.from('audit_log').select('*').order('created_at',{ascending:false}).limit(50)
-        : supabase.from('audit_log').select('*').eq('user_id',profile.id).order('created_at',{ascending:false}).limit(50)
-    ]);
-
-    if(!att.error) setAttendance(att.data||[]);
-    if(!lev.error) setLeaves(lev.data||[]);
-    if(!sum.error) setSummary(sum.data||[]);
-    if(!aud.error) setAuditLog(aud.data||[]);
   };
 
   useEffect(()=>{
@@ -604,6 +1970,40 @@ function App(){
     return ()=>{channels.forEach(ch=>supabase.removeChannel(ch));};
   },[user]);
 
+  useEffect(()=>{
+    if(attendanceFrom && attendanceTo && attendanceFrom>attendanceTo){
+      setAttendanceTo(attendanceFrom);
+    }
+  },[attendanceFrom,attendanceTo]);
+
+  useEffect(()=>{
+    const onEsc=(e)=>{
+      if(e.key!=='Escape') return;
+      if(leaveDecisionOpen && !leaveDecisionSaving){
+        setLeaveDecisionOpen(false);
+        setLeaveDecisionRow(null);
+        return;
+      }
+      if(leaveModalOpen){
+        closeLeaveModal('esc');
+        return;
+      }
+      if(staffModalOpen){
+        closeStaffModal('esc');
+        return;
+      }
+      if(manualEntryOpen && !manualSaving){
+        setManualEntryOpen(false);
+        return;
+      }
+      if(deleteTarget && !deleteLoading){
+        setDeleteTarget(null);
+      }
+    };
+    window.addEventListener('keydown',onEsc);
+    return ()=>window.removeEventListener('keydown',onEsc);
+  },[leaveDecisionOpen,leaveDecisionSaving,leaveModalOpen,staffModalOpen,manualEntryOpen,manualSaving,deleteTarget,deleteLoading,closeLeaveModal,closeStaffModal]);
+
   const dashboardStats=useMemo(()=>{
     const today=dayKey(new Date());
     const y=dayKey(new Date(Date.now()-86400000));
@@ -613,9 +2013,8 @@ function App(){
     const presentToday=rowsToday.filter(r=>String(r.status||'').toLowerCase()==='present').length;
     const absentToday=rowsToday.filter(r=>String(r.status||'').toLowerCase()==='absent').length;
     const lateToday=rowsToday.filter(r=>String(r.status||'').toLowerCase()==='late').length;
-    const totalStaff=Math.max(staff.length, presentToday+absentToday+lateToday);
-
-    const approvedLeaves=leaves.filter(l=>String(l.status||'').toLowerCase()==='approved' && (dayKey(l.start_date||l.from_date||new Date())<=today) && (dayKey(l.end_date||l.to_date||new Date())>=today));
+    const onLeaveCount=onLeaveTodayRows.length;
+    const totalStaff=Math.max(staff.length, presentToday+absentToday+lateToday+onLeaveCount);
 
     const yPresent=rowsYesterday.filter(r=>String(r.status||'').toLowerCase()==='present').length;
     const yLate=rowsYesterday.filter(r=>String(r.status||'').toLowerCase()==='late').length;
@@ -629,7 +2028,7 @@ function App(){
       presentToday,
       absentToday,
       lateToday,
-      onLeaveToday:approvedLeaves.length,
+      onLeaveToday:onLeaveCount,
       presentRate,
       deltaPresentRate:Math.max(0,presentRate-weekRate),
       deltaPresent:Math.max(0,presentToday-yPresent),
@@ -638,7 +2037,7 @@ function App(){
       recordsToday:rowsToday.length,
       lastSync:rowsToday[0]?.check_in || rowsToday[0]?.created_at ? new Date(rowsToday[0]?.check_in || rowsToday[0]?.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '--:--'
     };
-  },[attendance,staff,leaves]);
+  },[attendance,staff,onLeaveTodayRows]);
 
   const reportData=useMemo(()=>{
     const y=new Date().getFullYear();
@@ -684,24 +2083,31 @@ function App(){
   },[attendance,summary,staff,dashboardStats]);
 
   const recentDeviceLogs=useMemo(()=>{
-    const rows=(attendance||[]).slice(0,12).map(r=>({id:r.id,name:r.staff_name||r.name||r.full_name||'Staff',staff_id:r.staff_id||r.employee_id||r.code,time:r.check_in?new Date(r.check_in).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):r.time||new Date(r.created_at||Date.now()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),status:r.status,method:r.method||'Fingerprint'}));
+    const rows=(attendance||[]).slice(0,12).map(r=>({id:r.id,name:staffMap.get(r.staff_id)?.full_name||r.staff_name||r.name||r.full_name||'Staff',staff_id:staffMap.get(r.staff_id)?.employee_id||r.staff_id||r.employee_id||r.code,time:r.check_in?new Date(r.check_in).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):r.time||new Date(r.created_at||Date.now()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),status:r.status,method:r.verification_method||r.method||'Fingerprint'}));
     if(rows.length) return rows;
     return (auditLog||[]).slice(0,12).map(a=>({id:a.id,name:a.full_name||a.user_name||a.email||'Staff',staff_id:a.user_id,time:new Date(a.created_at||Date.now()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),status:a.action||'present',method:a.device||'Device'}));
-  },[attendance,auditLog]);
+  },[attendance,auditLog,staffMap]);
 
   const quickMark=async(status)=>{
     if(!supabase || !user) return;
-    const today=dayKey(new Date());
-    const staffId=staff[0]?.id || null;
-    const payload={
-      user_id:user.id,
-      staff_id:staffId,
-      status,
-      date:today,
-      check_in:new Date().toISOString(),
-      source:'manual'
-    };
-    await supabase.from('attendance').insert(payload);
+    try{
+      const today=dayKey(new Date());
+      const staffId=staff[0]?.id || null;
+      const payload={
+        user_id:user.id,
+        staff_id:staffId,
+        status,
+        date:today,
+        check_in:new Date().toISOString(),
+        source:'manual'
+      };
+      const res=await supabase.from('attendance').insert(payload);
+      if(res.error) throw res.error;
+      await loadData(user);
+    }catch(err){
+      console.error('[QuickMark] Failed:',err);
+      pushToast('error',mapFriendlyError(err));
+    }
   };
 
   const onAuth=async({authUser,forcedRole,profileName})=>{
@@ -725,22 +2131,90 @@ function App(){
   if(!sessionChecked) return <div className="splash"><div className="splash-sub">Restoring session...</div></div>;
   if(!user) return <Login onAuth={onAuth}/>;
 
-  return <div className="app-shell">
-    <Sidebar page={page} setPage={setPage} user={user} onLogout={logout}/>
-    <div className="main">
-      <TopBar user={user} dark={dark} setDark={setDark}/>
-      <div className="content">
-        {page==='dashboard' && <DashboardPage stats={dashboardStats} attendanceLogs={recentDeviceLogs} onQuickMark={quickMark} role={user.role}/>}
-        {page==='reports' && <ReportsPage report={reportData} period={period} setPeriod={setPeriod}/>}
-        {page==='attendance' && <Placeholder title="Attendance"/>}
-        {page==='staff' && <Placeholder title="Staff"/>}
-        {page==='leave' && <Placeholder title="Leave Management"/>}
-        {page==='documents' && <Placeholder title="Documents"/>}
-        {page==='settings' && <Placeholder title="Settings"/>}
-        {page==='security' && <Placeholder title="Security"/>}
+  return <>
+    <ToastHost toasts={toasts} onDismiss={dismissToast}/>
+    <StaffModal
+      open={staffModalOpen}
+      mode={staffModalMode}
+      form={staffForm}
+      errors={staffFormErrors}
+      submitting={staffSubmitting}
+      onRequestClose={closeStaffModal}
+      onChange={handleStaffFormChange}
+      onBlurField={onStaffFieldBlur}
+      onSubmit={saveStaff}
+      isSubmitDisabled={!isStaffFormValid}
+      onGenerateId={()=>handleStaffFormChange('employee_id',nextEmployeeId)}
+    />
+    <DeleteConfirmModal
+      open={!!deleteTarget}
+      name={deleteTarget?.full_name||deleteTarget?.name}
+      loading={deleteLoading}
+      onCancel={()=>{if(!deleteLoading) setDeleteTarget(null);}}
+      onConfirm={confirmDeleteStaff}
+    />
+    <ManualEntryModal
+      open={manualEntryOpen}
+      selectedDate={manualDate}
+      onDateChange={(val)=>setManualDate(val||todayDateKey())}
+      onClose={()=>{if(!manualSaving) setManualEntryOpen(false);}}
+      rows={manualRowsList}
+      markedCount={markedCount}
+      totalStaff={staff.length}
+      onMarkAllPresent={onMarkAllPresent}
+      onMarkAllAbsent={onMarkAllAbsent}
+      onClearAll={onClearAllManual}
+      onStatusChange={onManualStatusChange}
+      onTimeChange={onManualTimeChange}
+      onSave={saveManualAttendance}
+      saving={manualSaving}
+      progressText={manualProgressText}
+    />
+
+    <LeaveApplyModal
+      open={leaveModalOpen}
+      form={leaveForm}
+      errors={leaveFormErrors}
+      submitting={leaveSubmitting}
+      user={user}
+      staffOptions={staff}
+      onChange={onLeaveFieldChange}
+      onBlurField={onLeaveFieldBlur}
+      onRequestClose={closeLeaveModal}
+      onSubmit={submitLeaveRequest}
+      isSubmitDisabled={!isLeaveFormValid}
+    />
+    <LeaveDecisionModal
+      open={leaveDecisionOpen}
+      mode={leaveDecisionMode}
+      row={leaveDecisionRow}
+      comment={leaveDecisionComment}
+      setComment={setLeaveDecisionComment}
+      submitting={leaveDecisionSaving}
+      onClose={()=>{if(!leaveDecisionSaving){setLeaveDecisionOpen(false);setLeaveDecisionRow(null);}}}
+      onConfirm={processLeaveDecision}
+    />
+
+    <div className="app-shell">
+      <Sidebar page={page} setPage={setPage} user={user} onLogout={logout} pendingLeaveCount={pendingLeaveCount}/>
+      <div className="main">
+        <TopBar user={user} dark={dark} setDark={setDark}/>
+        <div className="content">
+          {page==='dashboard' && <DashboardPage stats={dashboardStats} attendanceLogs={recentDeviceLogs} onQuickMark={quickMark} onManualEntry={openManualEntry} role={user.role} pendingLeaveCount={pendingLeaveCount} onLeaveTodayRows={onLeaveTodayRows} upcomingLeaves={upcomingLeaves}/>} 
+          {page==='reports' && <ReportsPage report={reportData} period={period} setPeriod={setPeriod}/>}
+          {page==='attendance' && <AttendancePage rows={attendance} staffMap={staffMap} fromDate={attendanceFrom} toDate={attendanceTo} onChangeFrom={setAttendanceFrom} onChangeTo={setAttendanceTo} onOpenManualEntry={openManualEntry} loading={dataLoading}/>}
+          {page==='staff' && (user.role==='admin'
+            ? <StaffPage staff={staff} onAddClick={openAddStaff} onEditClick={openEditStaff} onDeleteClick={requestDeleteStaff} loading={dataLoading}/>
+            : <Placeholder title="Staff"/>
+          )}
+          {page==='leave' && <LeaveManagementPage user={user} rows={leaveRows} filter={leaveFilter} setFilter={setLeaveFilter} onApplyClick={openLeaveApply} onApproveClick={openApproveLeave} onRejectClick={openRejectLeave} onCancelClick={cancelOwnLeave} pendingCount={pendingLeaveCount} loading={dataLoading}/>}
+          {page==='documents' && <Placeholder title="Documents"/>}
+          {page==='settings' && <Placeholder title="Settings"/>}
+          {page==='security' && <Placeholder title="Security"/>}
+        </div>
       </div>
     </div>
-  </div>;
+  </>;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
