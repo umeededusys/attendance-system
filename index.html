@@ -302,12 +302,14 @@ function Login({onAuth}){
     if(!supabase){setErr("Supabase SDK failed to initialize.");return;}
     setLoading(true);
     try{
-      // Query staff table directly (no Supabase Auth required)
+      console.log("🔍 Querying staff table for:", email.trim());
       const {data,error}=await supabase
         .from("staff")
-        .select("id,name,role,dept,email")
+        .select("id,name,email,role,dept")
         .eq("email",email.trim())
         .maybeSingle();
+      
+      console.log("📊 Query result:", data ? "FOUND" : "NOT FOUND", error);
       
       if(error) throw error;
       if(!data) throw new Error("Staff member not found");
@@ -316,22 +318,20 @@ function Login({onAuth}){
       let dbRole=(staffMember.role||"").toLowerCase();
       let profileName=staffMember.name||"";
 
-      if(dbRole && dbRole!==role && role!=="admin"){
-        setErr(`Role mismatch. This account is '${dbRole}', but '${role}' was selected.`);
+      if(dbRole && dbRole!==role){
+        setErr(`Role mismatch. Account is '${dbRole}', but '${role}' selected.`);
+        setLoading(false);
         return;
       }
 
-      // Create a mock auth user object for compatibility
-      const mockAuthUser={
-        id:staffMember.id,
-        email:staffMember.email,
-        user_metadata:{name:profileName,role:dbRole}
-      };
-
+      const mockAuthUser={id:staffMember.id,email:staffMember.email,user_metadata:{name:profileName}};
+      console.log("✅ Staff found, logging in:", profileName);
       onAuth({authUser:mockAuthUser,forcedRole:role||dbRole,profileName});
     }catch(ex){
+      console.error("❌ Login error:", ex);
       setErr(ex.message||"Invalid login credentials");
-    }finally{setLoading(false);}
+      setLoading(false);
+    }
   };
 
   return (
@@ -1831,134 +1831,10 @@ function App(){
   };
 
   useEffect(()=>{
-    const SESSION_RESTORE_TIMEOUT_MS=3000;
-    let alive=true;
-
-    const setUserState=(nextUser,reason)=>{
-      if(!alive) return;
-      console.log(`[SessionRestore] setUser -> ${nextUser?'authenticated':'guest'} (${reason})`);
-      setUser(nextUser);
-    };
-
-    const transitionFromSplash=(target)=>{
-      if(!alive) return;
-      console.log(`[SessionRestore] transition splash -> ${target}`);
-      setSessionChecked(true);
-    };
-
-    const clearSessionAndFallback=(reason)=>{
-      console.warn(`[SessionRestore] Fallback to login: ${reason}`);
-      setUserState(null,reason);
-      transitionFromSplash('login');
-
-      if(supabase){
-        supabase.auth.signOut()
-          .then(()=>console.log('[SessionRestore] Session cleared via signOut()'))
-          .catch(signOutError=>console.error('[SessionRestore] Failed to clear session during fallback:', signOutError));
-      }
-    };
-
-    const restoreSession=async()=>{
-      console.log('[SessionRestore] Starting session check');
-
-      if(!supabase){
-        console.error('[SessionRestore] Supabase client not initialized');
-        setUserState(null,'supabase client missing');
-        transitionFromSplash('login');
-        return;
-      }
-
-      const timeoutPromise=new Promise(resolve=>setTimeout(()=>resolve({timedOut:true}),SESSION_RESTORE_TIMEOUT_MS));
-
-      let raceResult;
-      try{
-        raceResult=await Promise.race([
-          supabase.auth.getSession().then(result=>({timedOut:false,result})),
-          timeoutPromise
-        ]);
-      }catch(getSessionError){
-        console.error('[SessionRestore] getSession threw error:', getSessionError);
-        await clearSessionAndFallback('getSession error');
-        return;
-      }
-
-      if(!alive) return;
-
-      if(raceResult?.timedOut){
-        console.error(`[SessionRestore] Session check timed out after ${SESSION_RESTORE_TIMEOUT_MS}ms`);
-        await clearSessionAndFallback('session check timeout');
-        return;
-      }
-
-      const {result}=raceResult;
-      if(result?.error){
-        console.error('[SessionRestore] getSession returned error:', result.error);
-        await clearSessionAndFallback('invalid session token or session fetch error');
-        return;
-      }
-
-      const session=result?.data?.session;
-      if(!session?.user){
-        console.log('[SessionRestore] No existing session found');
-        setUserState(null,'no active session');
-        transitionFromSplash('login');
-        return;
-      }
-
-      console.log('[SessionRestore] Session found for user:', session.user.id);
-
-      try{
-        const profile=await resolveUserProfile(session.user,undefined,undefined,{requireDbProfile:true,context:'session_restore'});
-        if(!alive) return;
-        console.log('[SessionRestore] User data fetch success');
-        setUserState(profile,'restored session');
-        transitionFromSplash('main app');
-      }catch(profileError){
-        console.error('[SessionRestore] User data fetch failed:', profileError);
-        await clearSessionAndFallback('missing or invalid user profile');
-      }
-    };
-
-    restoreSession().catch(async(unhandledError)=>{
-      console.error('[SessionRestore] Unhandled restoration error:', unhandledError);
-      await clearSessionAndFallback('unhandled restoration error');
-    });
-
-    let listener;
-    if(supabase?.auth?.onAuthStateChange){
-      const {data}=supabase.auth.onAuthStateChange(async(event,session)=>{
-        if(!alive) return;
-
-        console.log(`[AuthState] Event=${event} user=${session?.user?.id||'none'}`);
-
-        if(!session?.user){
-          setUserState(null,'auth state signed out');
-          transitionFromSplash('login');
-          return;
-        }
-
-        try{
-          const profile=await resolveUserProfile(session.user,undefined,undefined,{requireDbProfile:true,context:'auth_state'});
-          if(!alive) return;
-          console.log('[AuthState] User data fetch success');
-          setUserState(profile,'auth state session update');
-          transitionFromSplash('main app');
-        }catch(authStateError){
-          console.error('[AuthState] User data fetch failed:', authStateError);
-          await clearSessionAndFallback('auth state profile fetch failed');
-        }
-      });
-      listener=data;
-    }else{
-      console.error('[SessionRestore] supabase.auth.onAuthStateChange unavailable');
-      transitionFromSplash('login');
-    }
-
-    return ()=>{
-      alive=false;
-      listener?.subscription?.unsubscribe?.();
-      console.log('[SessionRestore] Cleanup complete');
-    };
+    console.log("[SessionRestore] SKIP: Using staff-table login only");
+    setUser(null);
+    setSessionChecked(true);
+    return ()=>{};
   },[]);
 
   useEffect(()=>{ if(user) loadData(user); },[user]);
