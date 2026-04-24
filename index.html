@@ -380,16 +380,46 @@ function App(){
   const [summary,setSummary]=useState([]);
   const [auditLog,setAuditLog]=useState([]);
 
-  const resolveUserProfile=async(authUser,forcedRole,profileName)=>{
+  const resolveUserProfile=async(authUser,forcedRole,profileName,{requireDbProfile=false,context='general'}={})=>{
+    if(!supabase) throw new Error('Supabase client is not initialized');
+    if(!authUser?.id) throw new Error('Invalid auth user while resolving profile');
+
+    console.log(`[Auth][${context}] Resolving profile for user:`, authUser.id);
+
     let dbRow=null;
-    const u=await supabase.from('users').select('*').eq('id',authUser.id).maybeSingle();
-    if(!u.error && u.data) dbRow=u.data;
-    if(!dbRow){
-      const p=await supabase.from('profiles').select('*').eq('id',authUser.id).maybeSingle();
-      if(!p.error && p.data) dbRow=p.data;
+    let usersError=null;
+    let profilesError=null;
+
+    try{
+      const u=await supabase.from('users').select('*').eq('id',authUser.id).maybeSingle();
+      usersError=u.error || null;
+      if(!usersError && u.data) dbRow=u.data;
+    }catch(ex){
+      usersError=ex;
     }
+
+    if(usersError) console.error(`[Auth][${context}] users table lookup failed:`, usersError);
+
+    if(!dbRow){
+      try{
+        const p=await supabase.from('profiles').select('*').eq('id',authUser.id).maybeSingle();
+        profilesError=p.error || null;
+        if(!profilesError && p.data) dbRow=p.data;
+      }catch(ex){
+        profilesError=ex;
+      }
+      if(profilesError) console.error(`[Auth][${context}] profiles table lookup failed:`, profilesError);
+    }
+
+    if(!dbRow && requireDbProfile){
+      throw new Error('User profile data is missing from database');
+    }
+
     const role=((dbRow?.role || forcedRole || authUser.user_metadata?.role || 'teacher')+'').toLowerCase();
-    return {id:authUser.id,email:authUser.email,name:dbRow?.full_name||profileName||authUser.user_metadata?.full_name||authUser.email,role};
+    const profile={id:authUser.id,email:authUser.email,name:dbRow?.full_name||profileName||authUser.user_metadata?.full_name||authUser.email,role};
+
+    console.log(`[Auth][${context}] Profile resolved. source=${dbRow?'database':'fallback'} role=${profile.role}`);
+    return profile;
   };
 
   const loadData=async(profile)=>{
@@ -430,26 +460,134 @@ function App(){
   };
 
   useEffect(()=>{
-    if(!supabase){setSessionChecked(true);return;}
+    const SESSION_RESTORE_TIMEOUT_MS=3000;
     let alive=true;
 
-    supabase.auth.getSession().then(async({data})=>{
+    const setUserState=(nextUser,reason)=>{
       if(!alive) return;
-      if(data?.session?.user){
-        const p=await resolveUserProfile(data.session.user);
-        if(!alive) return;
-        setUser(p);
-      }
+      console.log(`[SessionRestore] setUser -> ${nextUser?'authenticated':'guest'} (${reason})`);
+      setUser(nextUser);
+    };
+
+    const transitionFromSplash=(target)=>{
+      if(!alive) return;
+      console.log(`[SessionRestore] transition splash -> ${target}`);
       setSessionChecked(true);
-    });
+    };
 
-    const {data:listener}=supabase.auth.onAuthStateChange(async(_e,s)=>{
+    const clearSessionAndFallback=(reason)=>{
+      console.warn(`[SessionRestore] Fallback to login: ${reason}`);
+      setUserState(null,reason);
+      transitionFromSplash('login');
+
+      if(supabase){
+        supabase.auth.signOut()
+          .then(()=>console.log('[SessionRestore] Session cleared via signOut()'))
+          .catch(signOutError=>console.error('[SessionRestore] Failed to clear session during fallback:', signOutError));
+      }
+    };
+
+    const restoreSession=async()=>{
+      console.log('[SessionRestore] Starting session check');
+
+      if(!supabase){
+        console.error('[SessionRestore] Supabase client not initialized');
+        setUserState(null,'supabase client missing');
+        transitionFromSplash('login');
+        return;
+      }
+
+      const timeoutPromise=new Promise(resolve=>setTimeout(()=>resolve({timedOut:true}),SESSION_RESTORE_TIMEOUT_MS));
+
+      let raceResult;
+      try{
+        raceResult=await Promise.race([
+          supabase.auth.getSession().then(result=>({timedOut:false,result})),
+          timeoutPromise
+        ]);
+      }catch(getSessionError){
+        console.error('[SessionRestore] getSession threw error:', getSessionError);
+        await clearSessionAndFallback('getSession error');
+        return;
+      }
+
       if(!alive) return;
-      if(s?.user){setUser(await resolveUserProfile(s.user));}
-      else setUser(null);
+
+      if(raceResult?.timedOut){
+        console.error(`[SessionRestore] Session check timed out after ${SESSION_RESTORE_TIMEOUT_MS}ms`);
+        await clearSessionAndFallback('session check timeout');
+        return;
+      }
+
+      const {result}=raceResult;
+      if(result?.error){
+        console.error('[SessionRestore] getSession returned error:', result.error);
+        await clearSessionAndFallback('invalid session token or session fetch error');
+        return;
+      }
+
+      const session=result?.data?.session;
+      if(!session?.user){
+        console.log('[SessionRestore] No existing session found');
+        setUserState(null,'no active session');
+        transitionFromSplash('login');
+        return;
+      }
+
+      console.log('[SessionRestore] Session found for user:', session.user.id);
+
+      try{
+        const profile=await resolveUserProfile(session.user,undefined,undefined,{requireDbProfile:true,context:'session_restore'});
+        if(!alive) return;
+        console.log('[SessionRestore] User data fetch success');
+        setUserState(profile,'restored session');
+        transitionFromSplash('main app');
+      }catch(profileError){
+        console.error('[SessionRestore] User data fetch failed:', profileError);
+        await clearSessionAndFallback('missing or invalid user profile');
+      }
+    };
+
+    restoreSession().catch(async(unhandledError)=>{
+      console.error('[SessionRestore] Unhandled restoration error:', unhandledError);
+      await clearSessionAndFallback('unhandled restoration error');
     });
 
-    return ()=>{alive=false;listener?.subscription?.unsubscribe?.();};
+    let listener;
+    if(supabase?.auth?.onAuthStateChange){
+      const {data}=supabase.auth.onAuthStateChange(async(event,session)=>{
+        if(!alive) return;
+
+        console.log(`[AuthState] Event=${event} user=${session?.user?.id||'none'}`);
+
+        if(!session?.user){
+          setUserState(null,'auth state signed out');
+          transitionFromSplash('login');
+          return;
+        }
+
+        try{
+          const profile=await resolveUserProfile(session.user,undefined,undefined,{requireDbProfile:true,context:'auth_state'});
+          if(!alive) return;
+          console.log('[AuthState] User data fetch success');
+          setUserState(profile,'auth state session update');
+          transitionFromSplash('main app');
+        }catch(authStateError){
+          console.error('[AuthState] User data fetch failed:', authStateError);
+          await clearSessionAndFallback('auth state profile fetch failed');
+        }
+      });
+      listener=data;
+    }else{
+      console.error('[SessionRestore] supabase.auth.onAuthStateChange unavailable');
+      transitionFromSplash('login');
+    }
+
+    return ()=>{
+      alive=false;
+      listener?.subscription?.unsubscribe?.();
+      console.log('[SessionRestore] Cleanup complete');
+    };
   },[]);
 
   useEffect(()=>{ if(user) loadData(user); },[user]);
@@ -567,8 +705,18 @@ function App(){
   };
 
   const onAuth=async({authUser,forcedRole,profileName})=>{
-    const p=await resolveUserProfile(authUser,forcedRole,profileName);
-    setUser(p);
+    console.log('[LoginAuth] Resolving user profile after sign-in');
+    try{
+      const p=await resolveUserProfile(authUser,forcedRole,profileName,{requireDbProfile:true,context:'post_login'});
+      console.log('[LoginAuth] User data fetch success');
+      setUser(p);
+    }catch(loginProfileError){
+      console.error('[LoginAuth] User data fetch failed:', loginProfileError);
+      if(supabase){
+        try{await supabase.auth.signOut();}catch(signOutError){console.error('[LoginAuth] signOut failed after profile error:', signOutError);}
+      }
+      throw new Error('Unable to load user profile. Please contact admin.');
+    }
   };
 
   const logout=async()=>{if(supabase) await supabase.auth.signOut();setUser(null);};
