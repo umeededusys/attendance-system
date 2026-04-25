@@ -1071,6 +1071,8 @@ const makeEmptyStaffForm=(employeeId='')=>({
   department:'Administration',
   designation:'',
   phone:'',
+  role:'teacher',
+  temp_password:'',
   employee_id:employeeId,
   join_date:new Date().toISOString().slice(0,10),
   status:'Active'
@@ -1218,6 +1220,8 @@ function StaffModal({open,mode,form,errors,submitting,onRequestClose,onChange,on
       <div className="modal-grid">
         <div className="field"><label>FULL NAME <span className="req">*</span></label><input ref={firstInputRef} className={`input ${errors.full_name?'invalid':''}`} value={form.full_name} onBlur={()=>onBlurField('full_name')} onChange={e=>onChange('full_name',e.target.value)} placeholder="Enter full name" />{errors.full_name&&<div className="field-error">{errors.full_name}</div>}</div>
         <div className="field"><label>EMAIL <span className="req">*</span></label><input className={`input ${errors.email?'invalid':''}`} value={form.email} onBlur={()=>onBlurField('email')} onChange={e=>onChange('email',e.target.value)} placeholder="firstname.lastname@umeed.pk" />{errors.email&&<div className="field-error">{errors.email}</div>}</div>
+        {mode==='add' && <div className="field"><label>TEMPORARY PASSWORD <span className="req">*</span></label><input type="text" className={`input ${errors.temp_password?'invalid':''}`} value={form.temp_password||''} onBlur={()=>onBlurField('temp_password')} onChange={e=>onChange('temp_password',e.target.value)} placeholder="Minimum 8 characters" />{errors.temp_password&&<div className="field-error">{errors.temp_password}</div>}<div className="muted" style={{fontSize:12,marginTop:4}}>This password will be used for staff login. Staff can change it later.</div></div>}
+        <div className="field"><label>ROLE <span className="req">*</span></label><select className={`input ${errors.role?'invalid':''}`} value={form.role||'teacher'} onBlur={()=>onBlurField('role')} onChange={e=>onChange('role',e.target.value)}><option value="teacher">Teacher</option><option value="staff">Support Staff</option><option value="guard">Guard</option><option value="helper">Helper</option><option value="aya">Aya</option><option value="accountant">Accountant</option><option value="admin">Admin</option></select>{errors.role&&<div className="field-error">{errors.role}</div>}</div>
         <div className="field"><label>DEPARTMENT <span className="req">*</span></label><select className={`input ${errors.department?'invalid':''}`} value={form.department} onBlur={()=>onBlurField('department')} onChange={e=>onChange('department',e.target.value)}>{STAFF_DEPARTMENTS.map(dep=><option key={dep} value={dep}>{dep}</option>)}</select>{errors.department&&<div className="field-error">{errors.department}</div>}</div>
         <div className="field"><label>DESIGNATION</label><input className="input" value={form.designation} onChange={e=>onChange('designation',e.target.value)} placeholder="e.g. Teacher / Coordinator" /></div>
         <div className="field"><label>PHONE <span className="req">*</span></label><input className={`input ${errors.phone?'invalid':''}`} value={form.phone} onBlur={()=>onBlurField('phone')} onChange={e=>onChange('phone',e.target.value)} placeholder="0300-1234567 or +923001234567" />{errors.phone&&<div className="field-error">{errors.phone}</div>}</div>
@@ -1607,6 +1611,11 @@ function App(){
       if(!value) return 'Email is required';
       if(!emailRe.test(value)) return 'Enter a valid email address';
     }
+    if(key==='role' && !value) return 'Role is required';
+    if(key==='temp_password'){
+      if(!value) return 'Temporary password is required';
+      if(value.length<8) return 'Temporary password must be at least 8 characters';
+    }
     if(key==='department' && !value) return 'Department is required';
     if(key==='phone'){
       if(!value) return 'Phone number is required';
@@ -1620,8 +1629,9 @@ function App(){
     return '';
   };
 
-  const validateStaffForm=(form)=>{
-    const checks=['full_name','email','department','phone','employee_id','join_date'];
+  const validateStaffForm=(form,mode='add')=>{
+    const checks=['full_name','email','role','department','phone','employee_id','join_date'];
+    if(mode==='add') checks.push('temp_password');
     const errs={};
     checks.forEach((k)=>{
       const msg=validateStaffField(k,form?.[k],form);
@@ -1651,6 +1661,28 @@ function App(){
     return {data:null,error:new Error('Mutation failed after fallback attempts'),usedPayload:working,removedColumns:removed};
   };
 
+  const createAuthStaffUser=async(form)=>{
+    const emailNorm=String(form.email||'').trim().toLowerCase();
+    const body={
+      email: emailNorm,
+      password: String(form.temp_password||''),
+      full_name: String(form.full_name||'').trim(),
+      employee_id: String(form.employee_id||'').trim().toUpperCase(),
+      role: form.role || 'staff',
+      phone: normalizePkPhone(form.phone),
+      department: form.department || 'Administration',
+      designation: form.designation || '',
+      status: String(form.status||'active').toLowerCase()
+    };
+    const {data,error}=await supabase.functions.invoke('create-staff-user',{body});
+    if(error){
+      const msg=error?.context?.message || error?.message || 'Unable to create staff login account';
+      throw new Error(msg.includes('Failed to send') ? 'Staff Auth creation failed. Deploy the Supabase Edge Function create-staff-user first.' : msg);
+    }
+    if(!data?.user_id) throw new Error(data?.error || 'Staff Auth user was not created');
+    return data.user_id;
+  };
+
   const upsertUsersRecord=async(form,existingUserId='')=>{
     // Enterprise mode: Auth users must be created in Supabase Auth or through a service-role Edge Function, not from browser code.
     // This function only links an existing user row when found. It never attempts privileged user creation from the client.
@@ -1665,7 +1697,7 @@ function App(){
             full_name:String(form.full_name||'').trim(),
             name:String(form.full_name||'').trim(),
             email:emailNorm,
-            role:'staff',
+            role:form.role||'staff',
             status:String(form.status||'active').toLowerCase(),
             is_active:String(form.status||'active').toLowerCase()==='active'
           })
@@ -1699,6 +1731,8 @@ function App(){
       department:row.department||'Administration',
       designation:row.designation||'',
       phone:row.phone||'',
+      role:row.role||'teacher',
+      temp_password:'',
       employee_id:row.employee_id||'',
       join_date:row.join_date?String(row.join_date).slice(0,10):new Date().toISOString().slice(0,10),
       status:row.status||'Active'
@@ -1717,6 +1751,7 @@ function App(){
     department:f?.department||'',
     designation:f?.designation||'',
     phone:f?.phone||'',
+    role:f?.role||'teacher',
     employee_id:String(f?.employee_id||'').trim().toUpperCase(),
     join_date:f?.join_date||'',
     status:f?.status||'Active'
@@ -1747,13 +1782,13 @@ function App(){
     setStaffFormErrors(prev=>({...prev,[key]:msg}));
   };
 
-  const isStaffFormValid=useMemo(()=>Object.keys(validateStaffForm(staffForm)).length===0,[staffForm]);
+  const isStaffFormValid=useMemo(()=>Object.keys(validateStaffForm(staffForm,staffModalMode)).length===0,[staffForm,staffModalMode]);
 
   const saveStaff=async()=>{
     if(staffSubmitting || !supabase || !user) return;
-    const errs=validateStaffForm(staffForm);
+    const errs=validateStaffForm(staffForm,staffModalMode);
     setStaffFormErrors(errs);
-    setStaffTouched({full_name:true,email:true,department:true,phone:true,employee_id:true,join_date:true});
+    setStaffTouched({full_name:true,email:true,role:true,temp_password:true,department:true,phone:true,employee_id:true,join_date:true});
     if(Object.keys(errs).length){
       pushToast('warning','Please correct the highlighted fields.');
       return;
@@ -1784,7 +1819,12 @@ function App(){
         setStaff(prev=>[optimisticRecord,...prev]);
       }
 
-      const userId=await upsertUsersRecord(normalized,staffModalMode==='edit'?normalized.user_id:'');
+      let userId='';
+      if(staffModalMode==='add'){
+        userId=await createAuthStaffUser(normalized);
+      }else{
+        userId=await upsertUsersRecord(normalized,normalized.user_id||normalized.id||'');
+      }
 
       const staffPayload=trimPayload({
         id: staffModalMode==='edit' ? undefined : (userId || normalized.user_id || normalized.id || undefined),
