@@ -511,6 +511,32 @@ body:has(.cinematic-login){ overflow:hidden!important; }
 @media (max-width:820px){body:has(.cinematic-login){overflow:auto!important}.login-layout.cinematic-login{height:auto!important;min-height:100dvh!important;overflow:auto!important}.login-layout.cinematic-login::before{background-position:30% center!important;filter:saturate(1.05) brightness(.72)!important}.login-layout.cinematic-login::after{background:linear-gradient(180deg,rgba(0,0,0,.14),rgba(0,0,0,.66) 38%,rgba(0,0,0,.88) 100%)!important}.login-layout.cinematic-login .login-right{min-height:100dvh!important;height:auto!important;padding:44vh 16px 22px!important;align-items:flex-end!important;justify-content:center!important}.login-layout.cinematic-login .login-card{width:100%!important;max-height:none!important;padding:20px!important;transform:none!important;animation:none!important;border-radius:28px!important}.login-layout.cinematic-login .login-brand-mini strong{font-size:26px!important}.login-layout.cinematic-login .role-grid{grid-template-columns:1fr!important}.login-layout.cinematic-login .role-card{min-height:auto!important;display:flex!important;align-items:center!important;text-align:left!important;gap:12px!important;padding:12px!important}.login-layout.cinematic-login .role-icon{margin:0!important}}
 @media (max-width:420px){.login-layout.cinematic-login .login-right{padding-top:38vh!important}.login-layout.cinematic-login .login-brand-mini img{width:56px!important;height:56px!important}.login-layout.cinematic-login .login-brand-mini strong{font-size:23px!important}.login-layout.cinematic-login .input{height:52px!important;font-size:16px!important}.login-layout.cinematic-login .btn-sign{height:58px!important;font-size:24px!important}}
 
+
+/* === UMEED enterprise theme: dark + premium soft-yellow light mode === */
+body.light-mode{
+  --bg:#fff5c7;
+  --surface:rgba(255,250,219,.94);
+  --surface-2:rgba(255,247,198,.96);
+  --surface-3:#fff0ad;
+  --border:rgba(95,62,0,.18);
+  --muted:#6e5b2a;
+  --text:#211706;
+  background:radial-gradient(900px 420px at 15% 0%,rgba(212,175,55,.34),transparent 70%),linear-gradient(135deg,#fff8d8,#ffeaa3 48%,#fff6c8);
+  color:var(--text);
+}
+body.light-mode .app-shell{background:linear-gradient(120deg,#fff3b6,#fff9df 52%,#ffe39a)}
+body.light-mode .sidebar{background:linear-gradient(180deg,rgba(255,236,158,.96),rgba(255,248,215,.98));border-right:1px solid rgba(112,75,0,.18)}
+body.light-mode .top,body.light-mode .login-card,body.light-mode .modal-card,body.light-mode .chart-card,body.light-mode .report-card,body.light-mode .staff-card,body.light-mode .stat,body.light-mode .attendance-table-wrap,body.light-mode .device{background:rgba(255,250,224,.88)!important;color:#201505;border-color:rgba(128,86,0,.18)!important;box-shadow:0 22px 70px rgba(122,86,0,.18)}
+body.light-mode .input,body.light-mode .mini-input,body.light-mode .search{background:rgba(255,255,255,.72)!important;color:#181006!important;border-color:rgba(128,86,0,.22)!important}
+body.light-mode .menu-btn{color:#5b481f} body.light-mode .menu-btn.active{color:#170e00;background:linear-gradient(135deg,rgba(212,175,55,.34),rgba(196,30,48,.08));border-color:rgba(212,175,55,.55)}
+body.light-mode .muted,body.light-mode .field label,body.light-mode .mini-field label{color:#6e5b2a!important}
+body.light-mode .greet{background:linear-gradient(120deg,rgba(255,230,137,.94),rgba(255,248,214,.9));border-color:rgba(212,175,55,.5)}
+body.light-mode .attendance-table th,body.light-mode .attendance-table td{border-color:rgba(94,68,0,.12);color:#211706}
+body.light-mode .modal-backdrop{background:rgba(74,45,0,.42)}
+body.light-mode .toast.error{background:rgba(196,30,48,.12)}
+body.light-mode .toast.success{background:rgba(37,207,122,.16)}
+body.light-mode .icon-btn{background:rgba(255,255,255,.65);color:#211706;border-color:rgba(128,86,0,.22)}
+
 </style>
 
 
@@ -1127,7 +1153,38 @@ const displayTime=(val)=>{
   const dt=new Date(raw);
   return Number.isNaN(dt.getTime()) ? '--:--' : dt.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 };
-const normalizeStatus=(status='')=>String(status).toLowerCase().replace(/\s+/g,'_');
+const normalizeStatus=(status='')=>{
+  const raw=String(status||'').toLowerCase().trim().replace(/[\s-]+/g,'_');
+  if(['leave','on_leave','approved_leave'].includes(raw)) return 'on_leave';
+  if(['present','absent','late','half_day','short_leave','holiday','weekend','pending','approved','rejected','cancelled','active','inactive'].includes(raw)) return raw;
+  return raw;
+};
+const dbAttendanceStatus=(status='')=>{
+  const norm=normalizeStatus(status);
+  if(norm==='on_leave') return 'leave';
+  if(['present','absent','late','half_day','short_leave','holiday','weekend'].includes(norm)) return norm;
+  return norm || 'present';
+};
+const dbLeaveType=(type='')=>{
+  const norm=String(type||'').toLowerCase().replace(/[\s-]+/g,'_');
+  if(norm.includes('sick')) return 'sick';
+  if(norm.includes('casual')) return 'casual';
+  if(norm.includes('emergency')) return 'emergency';
+  if(norm.includes('annual') || norm.includes('paid')) return 'paid';
+  if(norm.includes('short')) return 'short_leave';
+  if(norm.includes('unpaid')) return 'unpaid';
+  return norm || 'other';
+};
+const displayLeaveType=(type='')=>{
+  const norm=String(type||'').toLowerCase().replace(/[\s-]+/g,'_');
+  const map={sick:'Sick Leave',casual:'Casual Leave',emergency:'Emergency Leave',paid:'Annual/Paid Leave',unpaid:'Unpaid Leave',short_leave:'Short Leave',other:'Other Leave'};
+  return map[norm] || type || 'Leave';
+};
+const displayAttendanceStatus=(status='')=>{
+  const norm=normalizeStatus(status);
+  const map={present:'Present',absent:'Absent',late:'Late',on_leave:'On Leave',half_day:'Half Day',short_leave:'Short Leave',holiday:'Holiday',weekend:'Weekend'};
+  return map[norm] || status || '—';
+};
 const isFutureDate=(dateStr)=>dateStr>todayDateKey();
 const statusClassName=(status)=>{
   const norm=normalizeStatus(status);
@@ -1326,7 +1383,7 @@ function AttendancePage({rows,staffMap,fromDate,toDate,onChangeFrom,onChangeTo,o
           {filtered.length===0 && <tr><td colSpan="8" className="muted">No attendance records in selected date range.</td></tr>}
           {filtered.map((row,i)=>{
             const st=staffMap.get(row.staff_id)||{};
-            const status=row.status||'—';
+            const status=displayAttendanceStatus(row.status)||'—';
             const method=row.verification_method || row.method || 'Fingerprint';
             const methodNorm=String(method).toLowerCase()==='manual'?'method-manual':'method-fingerprint';
             const dateText=row.date?new Date(row.date).toLocaleDateString():new Date(row.created_at||Date.now()).toLocaleDateString();
@@ -1547,7 +1604,7 @@ function App(){
   const [user,setUser]=useState(null);
   const [page,setPage]=useState('dashboard');
   const [period,setPeriod]=useState('monthly');
-  const [dark,setDark]=useState(true);
+  const [dark,setDark]=useState(()=>{try{return (localStorage.getItem('umeed-theme')||'dark')==='dark';}catch(e){return true;}});
   useEffect(()=>{document.body.classList.toggle('light-mode', !dark);try{localStorage.setItem('umeed-theme', dark ? 'dark' : 'light');}catch(e){}},[dark]);
   useEffect(()=>{try{if(localStorage.getItem('umeed-theme')==='light') setDark(false);}catch(e){}},[]);
 
@@ -2110,7 +2167,7 @@ function App(){
           user_id:row.user_id || row.staff_id,
           date:manualDate,
           attendance_date:manualDate,
-          status:norm==='on_leave'?'On Leave':(norm==='present'?'Present':norm==='absent'?'Absent':'Late'),
+          status:dbAttendanceStatus(row.status),
           check_in:(norm==='present' || norm==='late')?combineDateAndTime(manualDate,row.check_in):null,
           check_out:(norm==='present' || norm==='late') && row.check_out?combineDateAndTime(manualDate,row.check_out):null,
           verification_method:'Manual',
@@ -2237,11 +2294,11 @@ function App(){
       const payload={
         staff_id:staffId,
         user_id:targetStaff?.user_id || user.id,
-        leave_type:leaveForm.leave_type,
+        leave_type:dbLeaveType(leaveForm.leave_type),
         start_date:leaveForm.start_date,
         end_date:leaveForm.end_date,
         reason:String(leaveForm.reason||'').trim(),
-        status:'Pending',
+        status:'pending',
         applied_date:toIsoNow(),
         created_at:toIsoNow()
       };
@@ -2273,7 +2330,7 @@ function App(){
       const payload={
         staff_id:leaveRow.staff_id,
         date:dateKey,
-        status:'On Leave',
+        status:'leave',
         verification_method:'Leave Approved',
         check_in:null,
         check_out:null
@@ -2313,7 +2370,7 @@ function App(){
     setLeaveDecisionSaving(true);
     try{
       const payload={
-        status:isReject?'Rejected':'Approved',
+        status:isReject?'rejected':'approved',
         approved_by:user.id,
         approved_date:toIsoNow(),
         admin_comment:!isReject?String(leaveDecisionComment||'').trim():undefined,
@@ -2339,7 +2396,7 @@ function App(){
     if(!row || !user) return;
     if(!window.confirm('Cancel this pending leave request?')) return;
     try{
-      const res=await runMutationWithColumnFallback((p)=>supabase.from('leaves').update(p).eq('id',row.id).select('id').single(),{status:'Cancelled',cancelled_date:toIsoNow()});
+      const res=await runMutationWithColumnFallback((p)=>supabase.from('leaves').update(p).eq('id',row.id).select('id').single(),{status:'cancelled',cancelled_date:toIsoNow()});
       if(res.error) throw res.error;
       pushToast('success','Leave request cancelled.');
       await loadData(user);
