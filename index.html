@@ -485,6 +485,208 @@
 }
 
 </style>
+
+
+<style id="umeed-final-responsive-system-patch">
+/* =========================================================
+   UMEED FINAL RESPONSIVE + BUTTERY FLOW PATCH
+   Keeps all existing functionality, fixes cropping/scrolling.
+   ========================================================= */
+html, body, #root{
+  width:100% !important;
+  min-height:100% !important;
+  overflow-x:hidden !important;
+}
+body{
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+}
+*{scrollbar-width:thin;scrollbar-color:rgba(212,175,55,.55) rgba(255,255,255,.06)}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:999px}
+*::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(212,175,55,.8),rgba(196,30,48,.72));border-radius:999px;border:2px solid rgba(0,0,0,.25)}
+button,.role-card,.menu-btn,.staff-card,.stat,.report-card,.chart-card,.leave-card,.icon-btn,.btn-gold,.btn-maroon,.btn-dark,.btn-ghost,.btn-danger,.btn-success,.btn-sign{
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, opacity .22s ease !important;
+}
+button:hover,.role-card:hover,.staff-card:hover,.stat:hover,.report-card:hover,.chart-card:hover,.leave-card:hover,.icon-btn:hover{
+  transform:translateY(-2px);
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* LOGIN: full cinematic building background, centered 3D glass form, never cropped */
+.login-layout.cinematic-login{
+  position:relative !important;
+  width:100% !important;
+  min-height:100dvh !important;
+  height:auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:clamp(14px,3.4vw,56px) !important;
+  overflow:auto !important;
+  isolation:isolate !important;
+  background-image:
+    linear-gradient(90deg,rgba(5,4,8,.54),rgba(8,5,10,.28) 45%,rgba(5,4,8,.58)),
+    radial-gradient(circle at 52% 38%,rgba(196,30,48,.10),transparent 34%),
+    var(--login-campus-bg-final) !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+.login-layout.cinematic-login::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:-2 !important;
+  background:
+    linear-gradient(to bottom,rgba(0,0,0,.36),rgba(0,0,0,.10) 44%,rgba(0,0,0,.64)),
+    radial-gradient(circle at center,transparent 30%,rgba(0,0,0,.48) 100%) !important;
+  pointer-events:none !important;
+}
+.login-layout.cinematic-login::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:-1 !important;
+  background:linear-gradient(110deg,transparent 0%,rgba(255,221,150,.08) 45%,transparent 58%) !important;
+  filter:blur(1px) !important;
+  opacity:.72 !important;
+  animation:umeedLightSweep 9s ease-in-out infinite alternate !important;
+  pointer-events:none !important;
+}
+@keyframes umeedLightSweep{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+.login-layout.cinematic-login .login-left{display:none!important}
+.login-layout.cinematic-login .login-right{
+  width:100% !important;
+  min-height:calc(100dvh - clamp(28px,6.8vw,112px)) !important;
+  height:auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  overflow:visible !important;
+}
+.login-layout.cinematic-login .login-card{
+  width:min(94vw,680px) !important;
+  max-height:none !important;
+  overflow:visible !important;
+  padding:clamp(22px,3.3vw,44px) !important;
+  border-radius:clamp(24px,3vw,38px) !important;
+  background:linear-gradient(135deg,rgba(18,15,22,.66),rgba(40,28,31,.52),rgba(86,13,29,.28)) !important;
+  border:1px solid rgba(255,236,198,.28) !important;
+  backdrop-filter:blur(22px) saturate(140%) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(140%) !important;
+  box-shadow:0 40px 120px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.06) inset,0 0 70px rgba(196,30,48,.20) !important;
+  transform-origin:center !important;
+  animation:umeedFloatCard 7s ease-in-out infinite !important;
+}
+@keyframes umeedFloatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.login-layout.cinematic-login .login-brand-mini{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:clamp(12px,2vw,22px) !important;
+  margin-bottom:clamp(18px,2.6vw,34px) !important;
+}
+.login-layout.cinematic-login .login-brand-mini img{width:clamp(62px,7vw,92px)!important;height:clamp(62px,7vw,92px)!important;object-fit:contain!important;filter:drop-shadow(0 18px 28px rgba(0,0,0,.42))!important}
+.login-layout.cinematic-login .login-brand-mini strong{font-size:clamp(28px,3.5vw,46px)!important;line-height:1.05!important;letter-spacing:-.8px!important;color:#fff!important;text-shadow:0 14px 34px rgba(0,0,0,.52)!important}
+.login-layout.cinematic-login .login-brand-mini .muted{font-size:clamp(14px,1.5vw,18px)!important;color:rgba(255,255,255,.76)!important;margin-top:6px!important}
+.login-layout.cinematic-login .role-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:clamp(12px,1.8vw,20px)!important;margin:0 0 clamp(20px,2.5vw,30px)!important}
+.login-layout.cinematic-login .role-card{min-height:clamp(112px,13vw,150px)!important;padding:clamp(14px,2vw,22px)!important;border-radius:22px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:0 20px 45px rgba(0,0,0,.25)!important;transform-style:preserve-3d!important}
+.login-layout.cinematic-login .role-card.active{background:linear-gradient(135deg,rgba(196,30,48,.54),rgba(196,30,48,.20))!important;border-color:rgba(255,51,78,.95)!important;box-shadow:0 22px 60px rgba(196,30,48,.28),0 0 0 1px rgba(255,255,255,.08) inset!important}
+.login-layout.cinematic-login .role-icon{width:clamp(42px,4.6vw,54px)!important;height:clamp(42px,4.6vw,54px)!important;margin:0 auto 12px!important}
+.login-layout.cinematic-login .role-title{font-size:clamp(18px,2vw,23px)!important}
+.login-layout.cinematic-login .role-sub{font-size:clamp(13px,1.4vw,16px)!important}
+.login-layout.cinematic-login .input{width:100%!important;height:clamp(52px,5.4vw,66px)!important;font-size:clamp(16px,1.7vw,20px)!important;border-radius:16px!important;background:rgba(255,255,255,.90)!important;color:#111!important;border:1px solid rgba(255,255,255,.36)!important;box-shadow:0 14px 40px rgba(0,0,0,.18)!important}
+.login-layout.cinematic-login .btn-sign{width:100%!important;height:clamp(58px,6vw,74px)!important;font-size:clamp(24px,2.8vw,34px)!important;border-radius:18px!important;margin-top:clamp(16px,2.2vw,24px)!important;box-shadow:0 26px 58px rgba(196,30,48,.34)!important}
+.login-layout.cinematic-login .field{margin-top:clamp(14px,1.9vw,22px)!important}
+.login-layout.cinematic-login .error{font-size:clamp(14px,1.5vw,17px)!important}
+
+/* APP SHELL: responsive across all desktops and screens */
+.app-shell{
+  width:100% !important;
+  min-height:100dvh !important;
+  height:100dvh !important;
+  display:flex !important;
+  overflow:hidden !important;
+}
+.sidebar{
+  flex:0 0 clamp(248px,18vw,330px) !important;
+  width:clamp(248px,18vw,330px) !important;
+  min-width:0 !important;
+  overflow:auto !important;
+}
+.main{min-width:0!important;flex:1 1 auto!important;overflow:hidden!important}
+.top{height:auto!important;min-height:70px!important;gap:12px!important;flex-wrap:wrap!important;padding:12px clamp(14px,1.7vw,24px)!important}
+.search{flex:1 1 280px!important;width:auto!important;max-width:min(560px,100%)!important}
+.top-right{flex:0 0 auto!important;flex-wrap:wrap!important;justify-content:flex-end!important}
+.content{padding:clamp(14px,1.7vw,24px)!important;scroll-behavior:smooth!important}
+.page-head{gap:12px!important;flex-wrap:wrap!important}
+.page-head h1{font-size:clamp(36px,4.4vw,64px)!important;line-height:1.02!important}
+.greet{grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important}
+.greet h3{font-size:clamp(28px,3vw,42px)!important;line-height:1.08!important}
+.stats4,.report-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;gap:clamp(10px,1.4vw,16px)!important}
+.split,.leave-dashboard-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))!important;gap:clamp(12px,1.5vw,18px)!important}
+.staff-grid,.leave-grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr))!important}
+.chart-wrap{height:clamp(230px,28vh,340px)!important;min-height:220px!important}
+.chart-card,.device,.staff-card,.report-card,.stat,.leave-card,.greet{min-width:0!important}
+.actions,.r-controls,.staff-toolbar,.attendance-toolbar,.leave-toolbar,.manual-toolbar,.attendance-filters,.bulk-actions,.leave-tabs{flex-wrap:wrap!important}
+.attendance-table-wrap,.manual-grid,.modal-card{max-width:100%!important;overflow:auto!important;-webkit-overflow-scrolling:touch!important}
+.attendance-table{min-width:860px!important}
+.manual-row{min-width:1080px!important}
+.modal-backdrop{padding:clamp(10px,2vw,24px)!important;align-items:center!important;overflow:auto!important}
+.modal-card{width:min(96vw,1180px)!important;max-height:min(92dvh,900px)!important;border-radius:clamp(18px,2vw,26px)!important;padding:clamp(14px,2vw,24px)!important}
+.modal-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))!important;gap:12px!important}
+.input,.mini-input,select,textarea{max-width:100%!important}
+.toast-wrap{right:clamp(8px,1.6vw,18px)!important;top:clamp(8px,1.6vw,18px)!important;max-width:calc(100vw - 16px)!important}.toast{max-width:100%!important}
+
+/* Large desktop polish */
+@media (min-width:1500px){
+  .content{padding:28px 34px!important}.chart-wrap{height:330px!important}.stats4{grid-template-columns:repeat(4,minmax(210px,1fr))!important}
+}
+
+/* Laptop/tablet */
+@media (max-width:1100px){
+  .app-shell{height:auto!important;min-height:100dvh!important;overflow:auto!important;flex-direction:column!important}
+  .sidebar{width:100%!important;flex:0 0 auto!important;max-height:none!important;padding:10px 12px!important;position:sticky!important;top:0!important;z-index:20!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,.10)!important}
+  .logo-block{padding:4px 4px 10px!important}.logo-block img{width:38px!important}.logo-lines strong{font-size:24px!important}.logo-lines span{font-size:10px!important}
+  .menu-group{margin-top:10px!important}.menu-tag{margin:0 6px 6px!important;font-size:10px!important}
+  .menu-group{display:block!important}.menu-group .menu-btn{width:auto!important;display:inline-flex!important;margin:0 7px 7px 0!important;font-size:15px!important;padding:10px 12px!important;white-space:nowrap!important}
+  .profile-panel,.logout{display:none!important}
+  .main{overflow:visible!important}.content{overflow:visible!important}.top{position:sticky!important;top:0!important;z-index:18!important;background:rgba(10,8,16,.84)!important;backdrop-filter:blur(18px)!important}
+  .greet{grid-template-columns:1fr!important}.sum-row{justify-content:flex-start!important;flex-wrap:wrap!important}.sum-item{text-align:left!important}
+}
+
+/* Mobile */
+@media (max-width:700px){
+  .login-layout.cinematic-login{background-attachment:scroll!important;padding:12px!important;background-position:center center!important}
+  .login-layout.cinematic-login .login-right{min-height:calc(100dvh - 24px)!important;align-items:center!important}
+  .login-layout.cinematic-login .login-card{width:100%!important;padding:18px!important;border-radius:26px!important;animation:none!important;max-height:none!important}
+  .login-layout.cinematic-login .login-brand-mini{align-items:center!important;text-align:left!important;gap:12px!important}.login-layout.cinematic-login .login-brand-mini strong{font-size:26px!important}.login-layout.cinematic-login .login-brand-mini img{width:58px!important;height:58px!important}
+  .login-layout.cinematic-login .role-grid{grid-template-columns:1fr!important;gap:10px!important}.login-layout.cinematic-login .role-card{min-height:auto!important;display:flex!important;align-items:center!important;text-align:left!important;gap:12px!important;padding:12px!important}.login-layout.cinematic-login .role-icon{margin:0!important}.login-layout.cinematic-login .role-title,.login-layout.cinematic-login .role-sub{text-align:left!important}
+  .login-secure-note{display:none!important}
+  .top{gap:8px!important}.search{flex-basis:100%!important;max-width:100%!important}.top-right{width:100%!important;justify-content:space-between!important}.who{max-width:calc(100vw - 90px)!important;overflow:hidden!important}
+  .page-head h1{font-size:34px!important}.page-head p{font-size:13px!important}.greet{padding:14px!important;border-radius:18px!important}.greet h3{font-size:28px!important}.actions{width:100%!important}.actions button{flex:1 1 140px!important}
+  .stats4,.report-grid,.split,.leave-dashboard-grid{grid-template-columns:1fr!important}.stat .v{font-size:36px!important}.device-kpis{grid-template-columns:1fr!important}.chart-wrap{height:240px!important}.staff-toolbar{align-items:stretch!important}.staff-toolbar > *{width:100%!important}.leave-card{min-width:0!important}.calendar-grid{gap:5px!important}.cal-cell{min-height:62px!important;padding:5px!important}
+  .modal-card{width:100%!important;max-height:94dvh!important}.modal-head{gap:10px!important}.modal-head h2,.modal-head h3{font-size:24px!important}.modal-actions{justify-content:stretch!important}.modal-actions button{flex:1!important}.manual-row{min-width:980px!important}.attendance-table{min-width:780px!important}.toast-wrap{left:8px!important;right:8px!important}.toast{min-width:0!important;width:100%!important}
+}
+
+/* Very small phones */
+@media (max-width:420px){
+  .content{padding:10px!important}.menu-group .menu-btn{font-size:14px!important;padding:9px 10px!important}.page-head h1{font-size:30px!important}.login-layout.cinematic-login .login-card{padding:16px 14px!important}.login-layout.cinematic-login .input{height:50px!important}.login-layout.cinematic-login .btn-sign{height:56px!important;font-size:22px!important}
+}
+
+/* Print/export view */
+@media print{
+  body{background:#fff!important;color:#111!important;overflow:visible!important}.sidebar,.top,.modal-backdrop,.toast-wrap,.icon-btn,.logout,.actions,.staff-actions,.leave-actions{display:none!important}.app-shell,.main,.content{height:auto!important;overflow:visible!important;display:block!important;background:#fff!important;color:#111!important}.chart-card,.stat,.report-card,.staff-card,.device,.greet,.leave-card{break-inside:avoid;border:1px solid #ddd!important;background:#fff!important;color:#111!important;box-shadow:none!important}.page-head h1,.greet h3{color:#111!important}.muted{color:#444!important}
+}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
