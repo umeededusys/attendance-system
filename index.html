@@ -316,7 +316,9 @@ function Login({onAuth}){
 
       const staffMember=data;
       let dbRole=(staffMember.role||"").toLowerCase();
-      let profileName=staffMember.name||"";
+      if(['super_admin','principal','management'].includes(dbRole)) dbRole='admin';
+      if(['helper','aya','guard','accountant','staff'].includes(dbRole)) dbRole='support';
+      let profileName=staffMember.name||staffMember.full_name||"";
 
       if(dbRole && dbRole!==role){
         setErr(`Role mismatch. Account is '${dbRole}', but '${role}' selected.`);
@@ -324,9 +326,9 @@ function Login({onAuth}){
         return;
       }
 
-      const mockAuthUser={id:staffMember.id,email:staffMember.email,user_metadata:{name:profileName}};
+      const mockAuthUser={id:staffMember.id,email:staffMember.email,user_metadata:{name:profileName,role:dbRole||role}};
       console.log("✅ Staff found, logging in:", profileName);
-      onAuth({authUser:mockAuthUser,forcedRole:role||dbRole,profileName});
+      await onAuth({authUser:mockAuthUser,forcedRole:role||dbRole,profileName});
     }catch(ex){
       console.error("❌ Login error:", ex);
       setErr(ex.message||"Invalid login credentials");
@@ -1748,6 +1750,10 @@ function App(){
       const u=await supabase.from('users').select('*').eq('id',authUser.id).maybeSingle();
       usersError=u.error || null;
       if(!usersError && u.data) dbRow=u.data;
+      if(!dbRow && authUser.email){
+        const byEmail=await supabase.from('users').select('*').eq('email',authUser.email).maybeSingle();
+        if(!byEmail.error && byEmail.data) dbRow=byEmail.data;
+      }
     }catch(ex){
       usersError=ex;
     }
@@ -1769,8 +1775,10 @@ function App(){
       throw new Error('User profile data is missing from database');
     }
 
-    const role=((dbRow?.role || forcedRole || authUser.user_metadata?.role || 'teacher')+'').toLowerCase();
-    const profile={id:authUser.id,email:authUser.email,name:dbRow?.full_name||profileName||authUser.user_metadata?.full_name||authUser.email,role};
+    let role=((dbRow?.role || forcedRole || authUser.user_metadata?.role || 'teacher')+'').toLowerCase();
+    if(['super_admin','principal','management'].includes(role)) role='admin';
+    if(['helper','aya','guard','accountant','staff'].includes(role)) role='support';
+    const profile={id:authUser.id,email:authUser.email,name:dbRow?.full_name||dbRow?.name||profileName||authUser.user_metadata?.full_name||authUser.user_metadata?.name||authUser.email,role};
 
     console.log(`[Auth][${context}] Profile resolved. source=${dbRow?'database':'fallback'} role=${profile.role}`);
     return profile;
@@ -1994,7 +2002,7 @@ function App(){
   const onAuth=async({authUser,forcedRole,profileName})=>{
     console.log('[LoginAuth] Resolving user profile after sign-in');
     try{
-      const p=await resolveUserProfile(authUser,forcedRole,profileName,{requireDbProfile:true,context:'post_login'});
+      const p=await resolveUserProfile(authUser,forcedRole,profileName,{requireDbProfile:false,context:'post_login'});
       console.log('[LoginAuth] User data fetch success');
       setUser(p);
     }catch(loginProfileError){
